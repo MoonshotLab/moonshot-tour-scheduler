@@ -31,4 +31,5 @@ app.get('/oauth2callback',
   routes.oauth
 );
 
+app.get('/users', routes.users);
 app.get('/isBusy/:email', routes.isBusy);
