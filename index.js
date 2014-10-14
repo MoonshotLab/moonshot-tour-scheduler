@@ -1,15 +1,15 @@
 var express = require('express');
+var config = require('./config')();
 var passport = require('./lib/auth').passport;
 var routes = require('./lib/routes');
-var PORT = process.env.PORT || 3000;
 
 
 var app = express();
 app.use(passport.initialize());
 var server = require('http').Server(app);
 
-server.listen(PORT, function(){
-  console.log('server listening on port', PORT);
+server.listen(config.PORT, function(){
+  console.log('server listening on port', config.PORT);
 });
 
 app.get('/', passport.authenticate('google', {
