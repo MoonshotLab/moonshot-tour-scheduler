@@ -31,4 +31,4 @@ app.get('/oauth2callback',
   routes.oauth
 );
 
-app.get('/user/:email', routes.getNextCalendarEvent);
+app.get('/isBusy/:email', routes.isBusy);
