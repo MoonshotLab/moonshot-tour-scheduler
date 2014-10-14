@@ -2,31 +2,37 @@ $(function(){
   var timeStamps = nowAndLater();
 
   users.forEach(function(user){
-    fetchUser(
+    fetchBusyData(
       user.emails[0].value, timeStamps.now, timeStamps.later
-    );
+    ).then(function(res){
+      console.log(res);
+    }).fail(function(err){
+
+    });
   });
 });
 
 
-var fetchUser = function(userName, timeMin, timeMax){
+var fetchBusyData = function(userName, timeMin, timeMax){
+  var deferred = Q.defer();
+
   var earl = [
     '/isBusy/',
     userName,
     '?timeMin=',
     timeMin,
     '&timeMax=',
-    timeMax
+    timeMax,
+    '&timeZone=America/Chicago'
   ].join('');
 
   $.ajax({
-    url: earl,
-    success: function(data){
-      console.log(data);
-    }, error: function(err){
-      console.log(err);
-    }
+    url     : earl,
+    success : deferred.resolve,
+    error   : deferred.reject
   });
+
+  return deferred.promise;
 };
 
 

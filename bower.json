@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap": "~3.2.0",
     "bootswatch-dist": "3.2.0-cosmo",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "q": "~1.0.1"
   }
 }

@@ -7,6 +7,7 @@ html
     link(rel='stylesheet', href='/vendor/bootswatch-dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/css/schedule.css')
 
+    script(src='/vendor/q/q.js')
     script(src='/vendor/underscore/underscore.js')
     script(src='/vendor/jquery/dist/jquery.min.js')
     script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
@@ -29,16 +30,27 @@ html
             label Number of People Attending
             input.form-control(type='number', placeholder='2')
 
-      .row
-        .col-xs-12.lab-schedule
-          table.table-striped
-            thead
-              tr
-                th
-                each user in users
-                  th
-                    .pic(style="background-image:url(#{user.picturePath})")
-                    h4= user.displayName
+      .lab-schedule
+        .row
+          .col-xs-1
+          .col-xs-11
+            .row
+              each user in users
+                .col-xs-3.user
+                  .pic(style="background-image:url(#{user.picturePath})")
+                  h4= user.displayName
+        .row
+          .col-xs-1.times
+            h4 9
+            h4 10
+            h4 11
+            h4 12
+            h4 1
+            h4 2
+            h4 3
+            h4 4
+            h4 5
+            h4 6
 
       .row
         .col-xs-12
