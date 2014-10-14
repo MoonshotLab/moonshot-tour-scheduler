@@ -6,11 +6,11 @@ var routes = require('./lib/routes');
 
 
 var app = express();
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(passport.initialize());
-app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.use(passport.initialize());
+app.use(require('stylus').middleware(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 var server = require('http').Server(app);
 
