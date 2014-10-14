@@ -7,7 +7,51 @@ html
     link(rel='stylesheet', href='/vendor/bootswatch-dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/css/schedule.css')
 
+    script(src='/vendor/underscore/underscore.js')
     script(src='/vendor/jquery/dist/jquery.min.js')
     script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/js/schedule.js')
+    script.
+      var users = !{JSON.stringify(users)};
   body
-    h1 Hi there
+    .container
+      .row
+        .col-sm-12.page-header
+          h1 Moonshot Lab <small>Schedule a Tour</small>
+
+      .row
+        .col-sm-8
+          .form-group
+            label Client/Group
+            input.form-control(type='text', placeholder='Barkley')
+        .col-sm-4
+          .form-group
+            label Number of People Attending
+            input.form-control(type='number', placeholder='2')
+
+      .row
+        .col-xs-12.lab-schedule
+          table.table-striped
+            thead
+              tr
+                th
+                each user in users
+                  th
+                    .pic(style="background-image:url(#{user.picturePath})")
+                    h4= user.displayName
+
+      .row
+        .col-xs-12
+          .form-group
+            label Note / Special Requests
+            textarea.form-control
+
+      .row
+        .col-xs-12
+          .form-group
+            label Your Name
+            input.form-control(type='text')
+
+      .row
+        .col-xs-12
+          button.text-right.btn.btn-primary(type='button') Submit

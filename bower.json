@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "bootstrap": "~3.2.0",
-    "bootswatch-dist": "3.2.0-cosmo"
+    "bootswatch-dist": "3.2.0-cosmo",
+    "underscore": "~1.7.0"
   }
 }
