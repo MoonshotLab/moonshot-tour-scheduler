@@ -1,0 +1,14 @@
+{
+  "name": "moonshot-tour-scheduler",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/MoonshotLab/moonshot-tour-scheduler",
+  "authors": [
+    "Joe Longstreet <joelongstreet@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "bootswatch-dist": "3.2.0-cosmo"
+  }
+}
