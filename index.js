@@ -16,19 +16,28 @@ server.listen(config.PORT, function(){
 });
 
 
-app.get('/', routes.home);
+app.get('/schedule',
+  passport.authenticate('standard', { failureRedirect: '/login-error' }),
+  routes.home
+);
 
-app.get('/auth', passport.authenticate('google', {
+app.get('/', passport.authenticate('standard', {
+  scope: ['email'],
+  hd: 'barkleyus.com'
+}), routes.loginError);
+
+app.get('/auth', passport.authenticate('lab', {
   accessType: 'offline',
   approvalPrompt: 'force',
+  hd: 'barkleyus.com',
   scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar']
 }), routes.loginError);
 
 app.get('/login-error', routes.loginError);
 
 app.get('/oauth2callback',
-  passport.authenticate('google', { failureRedirect: '/login-error' }),
-  routes.oauth
+  passport.authenticate('lab', { failureRedirect: '/login-error' }),
+  routes.authenticated
 );
 
 app.get('/users', routes.users);
