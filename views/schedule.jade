@@ -30,7 +30,15 @@ html
             label Number of People Attending
             input.form-control(type='number', placeholder='2')
 
-      .lab-schedule
+      .date-controller.row
+        .col-xs-4
+          a.prev-date(href='#')
+        .col-xs-4
+          p.current-date(href='#')
+        .col-xs-4
+          a.next-date(href='#')
+
+      .lab-schedule.well
         .row
           .col-xs-1
           .col-xs-11
