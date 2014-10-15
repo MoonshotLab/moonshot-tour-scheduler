@@ -25,8 +25,7 @@ app.get('/schedule',
 );
 
 app.get('/', passport.authenticate('standard', {
-  scope: ['email'],
-  hd: 'barkleyus.com'
+  scope: ['email']
 }), routes.loginError);
 
 app.get('/auth', passport.authenticate('lab', {
