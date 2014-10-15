@@ -19,6 +19,9 @@ server.listen(config.PORT, function(){
 });
 
 
+if(config.ROOT_URL == 'http://localhost:3000')
+  app.get('/', routes.home);
+
 app.get('/schedule',
   passport.authenticate('standard', { failureRedirect: '/login-error' }),
   routes.home
