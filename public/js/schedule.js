@@ -48,17 +48,41 @@ var markTimesAsBusy = function(user, selectedDate, busyEvents){
 
   $tableData.each(function(i, el){
     var markBusy = false;
-    var hour = el.dataset.hour;
-    var minute = el.dataset.minute;
+    var minute   = el.dataset.minute;
+    var hour     = el.dataset.hour;
+    var day      = selectedDate.getDate();
+    var month    = selectedDate.getMonth();
+    var year     = selectedDate.getFullYear();
 
     busyEvents.forEach(function(busyEvent){
-      var startHour = busyEvent.start.getHours();
-      var startMin  = busyEvent.start.getMinutes();
-      var endHour   = busyEvent.end.getHours();
-      var endMin    = busyEvent.end.getMinutes();
+      var startMin    = busyEvent.start.getMinutes();
+      var startHour   = busyEvent.start.getHours();
+      var startDay    = busyEvent.start.getDate();
+      var startMonth  = busyEvent.start.getMonth();
+      var startYear   = busyEvent.start.getFullYear();
+      var endMin      = busyEvent.end.getMinutes();
+      var endHour     = busyEvent.end.getHours();
+      var endDay      = busyEvent.end.getDate();
+      var endMonth    = busyEvent.end.getMonth();
+      var endYear     = busyEvent.end.getFullYear();
 
+      // if the full day is booked
+      if(endDay > day || endMonth > month || endYear > year){
+        if(startDay != day || startMonth != month || startYear != year)
+          markBusy = true;
+      }
+
+      // if the event spans multiple days, but is partial on the given day
+      if(startDay != day){
+        startHour = 0;
+        startMinute = 0;
+      } else if(endDay != day){
+        endHour = 23;
+        endMinute = 59;
+      }
+
+      // if part of the day is booked
       if(hour >= startHour && hour <= endHour){
-
         if(hour > startHour && hour < endHour){
           markBusy = true;
         } else if(hour == startHour){
