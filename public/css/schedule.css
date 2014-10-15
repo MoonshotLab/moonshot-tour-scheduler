@@ -1,6 +1,9 @@
 .lab-schedule {
   margin-bottom: 50px;
 }
+#form-errors {
+  display: none;
+}
 table.time-table {
   display: none;
 }

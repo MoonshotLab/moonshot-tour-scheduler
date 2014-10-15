@@ -1,3 +1,5 @@
+var defaultTimeZone = 'America/Chicago';
+
 $(function(){
 
   // prepopulate the date picker and attache event listeners to the prev and
@@ -36,6 +38,18 @@ $(function(){
     });
   });
 
+
+  // Handle form submission
+  $('#submit-form').click(function(e){
+    e.preventDefault();
+    $('#form-errors').hide();
+    $('#form-errors').html('');
+
+    var errors = validateForm();
+    if(errors.length === 0){
+      submitForm(collectFormData());
+    } else showFormErrors(errors);
+  });
 });
 
 
@@ -182,7 +196,8 @@ var fetchBusyData = function(userName, timeMin, timeMax){
     timeMin,
     '&timeMax=',
     timeMax,
-    '&timeZone=America/Chicago'
+    '&timeZone=',
+    defaultTimeZone
   ].join('');
 
   $.ajax({
@@ -192,4 +207,77 @@ var fetchBusyData = function(userName, timeMin, timeMax){
   });
 
   return deferred.promise;
+};
+
+
+var validateForm = function(){
+  var errors = [];
+
+  var scheduler = $('input[name=schedulerEmail]').val();
+  var client = $('input[name=client]').val();
+
+  if(!validateEmail(scheduler))
+    errors.push('Your E-Mail address is invalid');
+  if(client.length === 0)
+    errors.push('Please add a client or group');
+
+  return errors;
+};
+
+
+var validateEmail = function(email){
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+};
+
+
+var showFormErrors = function(errors){
+  var $container = $('#form-errors');
+  $container.show();
+
+  errors.forEach(function(error){
+    $container.append([
+      '<li>', error, '</li>'
+    ].join(''));
+  });
+};
+
+
+var collectFormData = function(){
+
+  var attendees = [{
+    email : $('input[name=schedulerEmail]').val()
+  }];
+  users.forEach(function(user){
+    attendees.push({
+      email : user.emails[0].value
+    });
+  });
+
+  var startTime = {
+    dateTime : '2014-10-16T10:00:00',
+    timeZone : defaultTimeZone
+  };
+  var endTime = {
+    dateTime : '2014-10-16T10:00:00',
+    timeZone : defaultTimeZone
+  };
+
+  var note;
+  if($('input[name=number-attending]').val())
+    note = $('input[name=number-attending]').val() + ' people attending.';
+
+  return {
+    summary     : 'Moonshot Lab Tour ' + 'for ' + $('input[name=client]').val(),
+    description : $('textarea[name=description]').val() + ' ' + note,
+    attendees   : attendees,
+    start       : startTime,
+    end         : endTime
+  };
+};
+
+
+var submitForm = function(formData){
+  // submit form
+  console.log(formData);
 };

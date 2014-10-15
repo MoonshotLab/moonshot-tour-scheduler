@@ -14,6 +14,7 @@ html
     script(src='/js/schedule.js')
     script.
       var users = !{JSON.stringify(users)};
+
   body
     .container
       .row
@@ -24,11 +25,11 @@ html
         .col-sm-8
           .form-group
             label Client/Group
-            input.form-control(type='text', placeholder='Barkley')
+            input.form-control(type='text', placeholder='Barkley', name='client', required)
         .col-sm-4
           .form-group
             label Number of People Attending
-            input.form-control(type='number', placeholder='2')
+            input.form-control(type='number', placeholder='2', name='number-attending')
 
       .date-controller.row
         .col-xs-4
@@ -67,14 +68,16 @@ html
         .col-xs-12
           .form-group
             label Note / Special Requests
-            textarea.form-control
+            textarea.form-control(name='description')
 
       .row
         .col-xs-12
           .form-group
             label Your Email
-            input.form-control(type='text', value=schedulerEmail, disabled)
-
+            input.form-control(type='text', name='schedulerEmail', value=schedulerEmail, disabled, required)
       .row
         .col-xs-12
-          button.text-right.btn.btn-primary(type='button') Submit
+          #form-errors.alert.alert-danger
+      .row
+        .col-xs-12
+          button.text-right.btn.btn-primary#submit-form(type='button') Submit
