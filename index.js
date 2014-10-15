@@ -33,7 +33,7 @@ app.get('/auth', passport.authenticate('lab', {
   accessType: 'offline',
   approvalPrompt: 'force',
   hd: 'barkleyus.com',
-  scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar']
+  scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar.readonly']
 }), routes.loginError);
 
 app.get('/login-error', routes.loginError);
