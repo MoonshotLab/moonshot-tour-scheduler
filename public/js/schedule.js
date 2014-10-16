@@ -33,6 +33,11 @@ $(function(){
     ).then(function(res){
       user.calendars = res.calendars;
       $('.time-table').show();
+
+      users.forEach(function(user){
+        markTimesAsBusy(user, now, findBusyEventsWithinDay(now, user));
+      });
+
     }).fail(function(err){
       alert(err);
     });
