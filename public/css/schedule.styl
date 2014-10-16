@@ -1,30 +1,79 @@
-.lab-schedule
-  margin-bottom 50px
+body
+  background-color #222222
 
-#form-errors
-  display none
+.container
+  padding-left 30px
+  padding-right 30px
+  max-width 900px
+  background-color white
+  padding-bottom 50px
 
-table.time-table
-  display none
-  tbody
-    td
-      padding 0
-      font-size .5em
-    td.busy
-      background-color red
+
+.text-description
+  margin-bottom 15px
+
 
 .date-controller
   text-align center
   margin-top 20px
-  padding-bottom 10px
+  .col
+    background-color #222222
+  .btn-link
+    background-color rgba(0,0,0,.02)
+    &:hover
+      text-decoration none
 
-.user
-  text-align center
-  .pic
-    margin auto
-    width 130px
-    background-size contain
-    background-repeat no-repeat
-    background-position center
-    border-radius 130px
-    height 130px
+
+table.time-table
+  // hide until we're ready to load
+  display none
+
+  margin-bottom 50px
+
+  // user photos and descriptions
+  thead
+    background-color rgba(0,0,0,.02)
+    .pic
+      margin auto
+      width 130px
+      background-size contain
+      background-repeat no-repeat
+      background-position center
+      border-radius 130px
+      height 130px
+    h4
+      text-align center
+      margin-bottom 0
+
+  tbody
+    td
+      border-color rgba(0,0,0,.02)
+      height 18px
+      padding 0
+      &.busy
+        background-color #ff0039
+    p
+      width 37px
+      text-align center
+      margin 0
+      font-size .5em
+      color rgba(0,0,0,.5)
+      span.hour
+        display none
+      span.minute
+        display inline-block
+        padding-top 3px
+
+    // Emphasize hours and half hours
+    tr:nth-child(2n+1)
+      p
+        color black
+        font-size .8em
+      span.hour
+        display inline
+      span.minute
+        padding-top 0px
+
+
+#form-errors
+  display none

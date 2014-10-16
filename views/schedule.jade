@@ -21,6 +21,47 @@ html
         .col-sm-12.page-header
           h1 Moonshot Lab <small>Schedule a Tour</small>
 
+      .row.text-description
+        .col-xs-12
+          blockquote Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim quam eu euismod ultricies. Ut at pellentesque diam. In cursus risus faucibus rutrum molestie.
+
+      .date-controller.row
+        .col-xs-12
+          btn.group
+            a.prev-date.btn.btn-primary(href='#')
+            p.current-date.btn.btn-link(href='#')
+            a.next-date.btn.btn-primary(href='#')
+
+      .row
+        .col-xs-12
+          table.table.time-table
+            thead
+              tr
+                th
+                each user in users
+                  th
+                    .pic(style="background-image:url(#{user.picturePath})")
+                    h4= user.displayName
+            tbody
+              - for(var hours=9; hours<18; hours++){
+                - for(var minutes=0; minutes< 60; minutes+=15){
+                  tr
+                    - var displayHours = hours;
+                    - var displayMinutes = minutes;
+                    - if(hours > 12) { displayHours = hours - 12; }
+                    - if(minutes == 0) { displayMinutes = '00'; }
+
+                    td
+                      p
+                        span.hour= displayHours
+                        span.colon :
+                        span.minute= displayMinutes
+
+                    each user in users
+                      td(class="user-#{user._id}", data-hour=hours, data-minute=minutes)
+                - }
+              - }
+
       .row
         .col-sm-8
           .form-group
@@ -30,39 +71,6 @@ html
           .form-group
             label Number of People Attending
             input.form-control(type='number', placeholder='2', name='number-attending')
-
-      .date-controller.row
-        .col-xs-4
-          a.prev-date(href='#')
-        .col-xs-4
-          p.current-date(href='#')
-        .col-xs-4
-          a.next-date(href='#')
-
-      .lab-schedule
-        table.table.table-striped.time-table
-          thead
-            tr
-              th
-              each user in users
-                th(class="user user-#{user._id}")
-                  .pic(style="background-image:url(#{user.picturePath})")
-                  h4= user.displayName
-          tbody
-            - for(var hours=9; hours<18; hours++){
-              - for(var minutes=0; minutes< 60; minutes+=15){
-                tr
-                  - var displayHours = hours;
-                  - var displayMinutes = minutes;
-                  - if(hours > 12) { displayHours = hours - 12; }
-                  - if(minutes == 0) { displayMinutes = '00'; }
-
-                  td #{displayHours}:#{displayMinutes}
-
-                  each user in users
-                    td(class="user-#{user._id}", data-hour=hours, data-minute=minutes)
-              - }
-            - }
 
       .row
         .col-xs-12
@@ -77,7 +85,7 @@ html
             input.form-control(type='text', name='schedulerEmail', value=schedulerEmail, disabled, required)
       .row
         .col-xs-12
-          #form-errors.alert.alert-danger
+          #form-errors.alert.alert-warning
       .row
         .col-xs-12
           button.text-right.btn.btn-primary#submit-form(type='button') Submit

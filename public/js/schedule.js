@@ -247,7 +247,7 @@ var showFormErrors = function(errors){
 
   errors.forEach(function(error){
     $container.append([
-      '<li>', error, '</li>'
+      '<p>', error, '</p>'
     ].join(''));
   });
 };

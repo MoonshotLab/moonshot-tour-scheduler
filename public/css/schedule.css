@@ -1,28 +1,37 @@
-.lab-schedule {
-  margin-bottom: 50px;
+body {
+  background-color: #222;
 }
-#form-errors {
-  display: none;
+.container {
+  padding-left: 30px;
+  padding-right: 30px;
+  max-width: 900px;
+  background-color: #fff;
+  padding-bottom: 50px;
 }
-table.time-table {
-  display: none;
-}
-table.time-table tbody td {
-  padding: 0;
-  font-size: 0.5em;
-}
-table.time-table tbody td.busy {
-  background-color: #f00;
+.text-description {
+  margin-bottom: 15px;
 }
 .date-controller {
   text-align: center;
   margin-top: 20px;
-  padding-bottom: 10px;
 }
-.user {
-  text-align: center;
+.date-controller .col {
+  background-color: #222;
 }
-.user .pic {
+.date-controller .btn-link {
+  background-color: rgba(0,0,0,0.02);
+}
+.date-controller .btn-link:hover {
+  text-decoration: none;
+}
+table.time-table {
+  display: none;
+  margin-bottom: 50px;
+}
+table.time-table thead {
+  background-color: rgba(0,0,0,0.02);
+}
+table.time-table thead .pic {
   margin: auto;
   width: 130px;
   background-size: contain;
@@ -30,4 +39,43 @@ table.time-table tbody td.busy {
   background-position: center;
   border-radius: 130px;
   height: 130px;
+}
+table.time-table thead h4 {
+  text-align: center;
+  margin-bottom: 0;
+}
+table.time-table tbody td {
+  border-color: rgba(0,0,0,0.02);
+  height: 18px;
+  padding: 0;
+}
+table.time-table tbody td.busy {
+  background-color: #ff0039;
+}
+table.time-table tbody p {
+  width: 37px;
+  text-align: center;
+  margin: 0;
+  font-size: 0.5em;
+  color: rgba(0,0,0,0.5);
+}
+table.time-table tbody p span.hour {
+  display: none;
+}
+table.time-table tbody p span.minute {
+  display: inline-block;
+  padding-top: 3px;
+}
+table.time-table tbody tr:nth-child(2n+1) p {
+  color: #000;
+  font-size: 0.8em;
+}
+table.time-table tbody tr:nth-child(2n+1) span.hour {
+  display: inline;
+}
+table.time-table tbody tr:nth-child(2n+1) span.minute {
+  padding-top: 0px;
+}
+#form-errors {
+  display: none;
 }
