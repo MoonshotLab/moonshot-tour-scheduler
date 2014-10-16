@@ -1,5 +1,7 @@
 var express = require('express');
 var path = require('path');
+var bodyParser = require('body-parser');
+var session = require('express-session');
 var config = require('./config')();
 var passport = require('./lib/auth').passport;
 var routes = require('./lib/routes');
@@ -8,7 +10,10 @@ var routes = require('./lib/routes');
 var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+app.use(session({ secret : config.SESSION_SECRET }));
 app.use(passport.initialize());
+app.use(bodyParser.json());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -20,11 +25,16 @@ server.listen(config.PORT, function(){
 
 
 if(config.ROOT_URL == 'http://localhost:3000')
-  app.get('/', routes.home);
+  app.get('/', routes.schedule);
 
 app.get('/schedule',
   passport.authenticate('standard', { failureRedirect: '/login-error' }),
-  routes.home
+  routes.schedule
+);
+
+app.post('/create-event',
+  passport.session('session'),
+  routes.createEvent
 );
 
 app.get('/', passport.authenticate('standard', {

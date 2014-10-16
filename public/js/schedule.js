@@ -42,12 +42,17 @@ $(function(){
   // Handle form submission
   $('#submit-form').click(function(e){
     e.preventDefault();
+
     $('#form-errors').hide();
     $('#form-errors').html('');
 
     var errors = validateForm();
     if(errors.length === 0){
-      submitForm(collectFormData());
+      submitForm(collectFormData())
+        .then(showFormConfirmation)
+        .fail(function(err){
+          alert(err.responseText);
+        });
     } else showFormErrors(errors);
   });
 });
@@ -263,7 +268,7 @@ var collectFormData = function(){
     timeZone : defaultTimeZone
   };
 
-  var note;
+  var note = '';
   if($('input[name=number-attending]').val())
     note = $('input[name=number-attending]').val() + ' people attending.';
 
@@ -278,6 +283,21 @@ var collectFormData = function(){
 
 
 var submitForm = function(formData){
-  // submit form
+  var deferred = Q.defer();
+
+  $.ajax({
+    type        : 'POST',
+    contentType : 'application/json',
+    url         : '/create-event',
+    data        : JSON.stringify(formData),
+    success     : deferred.resolve,
+    error       : deferred.reject
+  });
+
+  return deferred.promise;
+};
+
+
+var showFormConfirmation = function(formData){
   console.log(formData);
 };
