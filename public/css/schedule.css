@@ -44,10 +44,23 @@ table.time-table thead h4 {
   text-align: center;
   margin-bottom: 0;
 }
+table.time-table tbody tr {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+table.time-table tbody tr.selected td {
+  background-color: #9954bb;
+}
+table.time-table tbody tr.selected td:first-child {
+  background-color: #fff;
+}
 table.time-table tbody td {
+  transition: 0.1s linear background-color;
+  cursor: pointer;
   border-color: rgba(0,0,0,0.02);
   height: 18px;
   padding: 0;
+  background-color: #fff;
 }
 table.time-table tbody td.busy {
   background-color: #ff0039;

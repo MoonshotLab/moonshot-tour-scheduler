@@ -46,10 +46,21 @@ table.time-table
       margin-bottom 0
 
   tbody
+    tr
+      -webkit-user-select none
+      -moz-user-select none
+      &.selected
+        td
+          background-color #9954bb
+        td:first-child
+          background-color white
     td
+      transition .1s linear background-color
+      cursor pointer
       border-color rgba(0,0,0,.02)
       height 18px
       padding 0
+      background-color white
       &.busy
         background-color #ff0039
       &.past

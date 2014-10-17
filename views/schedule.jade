@@ -52,7 +52,7 @@ html
                     - if(minutes == 0) { displayMinutes = '00'; }
 
                     td
-                      p
+                      p(unselectable='on')
                         span.hour= displayHours
                         span.colon :
                         span.minute= displayMinutes
@@ -61,6 +61,20 @@ html
                       td(class="user-#{user._id}", data-hour=hours, data-minute=minutes)
                 - }
               - }
+
+      .row
+        .col-sm-6
+          .form-group
+            label Date
+            input.form-control(type='date', name='date')
+        .col-sm-3
+          .form-group
+            label Start Time
+            input.form-control(type='time', name='startTime')
+        .col-sm-3
+          .form-group
+            label End Time
+            input.form-control(type='time', name='endTime')
 
       .row
         .col-sm-8

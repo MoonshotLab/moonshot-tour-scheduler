@@ -11,6 +11,7 @@ $(function(){
     updateDateController(selectedDateTime);
     $('td').removeClass('busy');
     $('td').removeClass('past');
+    $('tr').removeClass('selected');
 
     users.forEach(function(user){
       var busyEvents = findBusyEventsWithinDay(new Date(selectedDateTime), user);
@@ -72,7 +73,104 @@ $(function(){
       $(e.target).parent().remove();
   });
 
+
+  attachMouseEventsToCalendar();
 });
+
+
+
+// Just wrap up the calendar selector stuff
+var attachMouseEventsToCalendar = function(){
+  var fillTimer;
+  var cleanUpTimer;
+  var mouseIsDown = false;
+  var $tr = $('tr');
+
+  $tr.mousedown(function(){
+    mouseIsDown = true;
+    $tr.removeClass('last-selected');
+    if($(this).hasClass('selected')){
+      $(this).removeClass('selected');
+    } else{
+      $(this).addClass('selected');
+    }
+  });
+
+  $tr.mouseover(function(e){
+    if(mouseIsDown) $(this).toggleClass('selected');
+  });
+  $tr.mouseup(function(){
+    if($(this).hasClass('selected')){
+      $(this).addClass('last-selected');
+    }
+  });
+
+  $('body').mouseup(function(){
+    mouseIsDown = false;
+
+    // smart fills spaces that look like they shold be filled
+    clearTimeout(fillTimer);
+    fillTimer = setTimeout(function(){
+      var $last = $('tr.last-selected').last();
+      var $next = $last.next();
+      var $prev = $last.prev();
+
+      var goForwards = true;
+      while(goForwards){
+        if(!($next.hasClass('selected')) && $next.next().hasClass('selected'))
+          $next.addClass('selected');
+        else if(!($next.hasClass('selected')))
+          goForwards = false;
+
+        $next = $next.next();
+        if(!$next.length) goForwards = false;
+      }
+
+      var goBackwards = true;
+      while(goBackwards){
+        if(!($prev.hasClass('selected')) && $prev.prev().hasClass('selected'))
+          $prev.addClass('selected');
+        else if(!($prev.hasClass('selected')))
+          goBackwards = false;
+
+        $prev = $prev.prev();
+        if(!$prev.length) goBackwards = false;
+      }
+    }, 100);
+
+    clearTimeout(cleanUpTimer);
+    cleanUpTimer = setTimeout(function(){
+      var $last = $('tr.last-selected').last();
+      var okIndices = [$last.index('tr')];
+      var $next = $last.next();
+      var $prev = $last.prev();
+
+      var goForwards = true;
+      while(goForwards){
+        if($next.hasClass('selected')) okIndices.push($next.index('tr'));
+        else goForwards = false;
+
+        $next = $next.next();
+        if(!$next.length) goForwards = false;
+      }
+
+      var goBackwards = true;
+      while(goBackwards){
+        if($prev.hasClass('selected')) okIndices.push($prev.index('tr'));
+        else goBackwards = false;
+
+        $prev = $prev.prev();
+        if(!$prev.length) goBackwards = false;
+      }
+
+      $('tr').each(function(i, el){
+        if(okIndices.indexOf(i) == -1){
+          $(el).removeClass('selected');
+        }
+      });
+    }, 300);
+  });
+};
 
 
 // time should be passed as a javascript date object
