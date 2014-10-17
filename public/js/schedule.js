@@ -10,6 +10,7 @@ $(function(){
     var selectedDateTime = $(this).data('time');
     updateDateController(selectedDateTime);
     $('td').removeClass('busy');
+    $('td').removeClass('past');
 
     users.forEach(function(user){
       var busyEvents = findBusyEventsWithinDay(new Date(selectedDateTime), user);
@@ -82,12 +83,23 @@ var markTimesAsBusy = function(user, selectedDate, busyEvents){
   var $tableData = $('.time-table').find(selector);
 
   $tableData.each(function(i, el){
+    var inThePast= false;
     var markBusy = false;
-    var minute   = el.dataset.minute;
-    var hour     = el.dataset.hour;
+    var minute   = parseInt(el.dataset.minute);
+    var hour     = parseInt(el.dataset.hour);
     var day      = selectedDate.getDate();
     var month    = selectedDate.getMonth();
     var year     = selectedDate.getFullYear();
+    var now      = new Date();
+
+    // Is the date viewed in the past?
+    if(day <= now.getDate() && month <= now.getMonth()){
+      if(day == now.getDate() && hour <= now.getHours()) inThePast = true;
+      if(day < now.getDate()) inThePast = true;
+      if(month < now.getMonth()) inThePast = true;
+    }
+
+    if(inThePast) $(el).addClass('past');
 
     busyEvents.forEach(function(busyEvent){
       var startMin    = busyEvent.start.getMinutes();

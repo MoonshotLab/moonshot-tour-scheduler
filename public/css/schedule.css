@@ -52,6 +52,9 @@ table.time-table tbody td {
 table.time-table tbody td.busy {
   background-color: #ff0039;
 }
+table.time-table tbody td.past {
+  background-color: rgba(0,0,0,0.07);
+}
 table.time-table tbody p {
   width: 37px;
   text-align: center;
