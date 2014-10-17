@@ -80,9 +80,21 @@ html
 
       .row
         .col-xs-12
+          .form-group.add-friends
+            label Add More People
+            #friend-errors.alert.alert-warning
+            .input-group
+              input.form-control(type='text', placeholder='yourfriend@email.com', name='yourFriend')
+              span.input-group-btn
+                button#add-friend.btn.btn-default.btn-success(type='button') +
+          ul.list-group.friends
+
+      .row
+        .col-xs-12
           .form-group
             label Your Email
             input.form-control(type='text', name='schedulerEmail', value=schedulerEmail, disabled, required)
+
       .row
         .col-xs-12
           #form-errors.alert.alert-warning
