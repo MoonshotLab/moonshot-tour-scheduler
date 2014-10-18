@@ -1,6 +1,7 @@
 (function($){
 
   $.fn.timeSelector = function(opts){
+
     var settings = $.extend({
       autoFill      : false,
       cleanUp       : false,

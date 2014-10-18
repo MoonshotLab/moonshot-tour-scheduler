@@ -4,20 +4,19 @@ $(function(){
 
   // prepopulate the date picker and attache event listeners to the prev and
   // next date selectors
-  updateDateController(new Date().getTime());
-  $('.date-controller').find('a').click(function(e){
-    e.preventDefault();
-    var selectedDateTime = $(this).data('time');
-    updateDateController(selectedDateTime);
-    $('td').removeClass('busy');
-    $('td').removeClass('past');
-    $('tr').removeClass('selected');
+  var dateController = $('.date-controller').dateController({
+    onUpdate : function(selectedDateTime){
+      $('td').removeClass('busy past');
+      $('tr').removeClass('selected');
 
-    users.forEach(function(user){
-      var busyEvents = findBusyEventsWithinDay(new Date(selectedDateTime), user);
-      markTimesAsBusy(user, new Date(selectedDateTime), busyEvents);
-    });
+      users.forEach(function(user){
+        var busyEvents = findBusyEventsWithinDay(new Date(selectedDateTime), user);
+        markTimesAsBusy(user, new Date(selectedDateTime), busyEvents);
+      });
+    }
   });
+
+  dateController.update(new Date().getTime());
 
 
   // Fetch busy data for each user
@@ -53,7 +52,7 @@ $(function(){
     $('#form-errors').hide();
     $('#form-errors').html('');
 
-    var errors = [];
+    var errors = validateForm();
     if(errors.length === 0){
       submitForm(collectFormData())
         .then(showFormConfirmation)
@@ -213,31 +212,7 @@ var findBusyEventsWithinDay = function(selectedDate, user){
 };
 
 
-// time should be passed as a UTC
-var updateDateController = function(selectedDateTime){
-  var $container = $('.date-controller');
 
-  var format = function(timestamp){
-    var months = [ 'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
-    var date = new Date(timestamp);
-    var day = date.getDate();
-    var month = date.getMonth();
-
-    return [
-      months[month],
-      ' ',
-      day
-    ].join('');
-  };
-
-  var before = selectedDateTime - 86400000;
-  var later = selectedDateTime + 86400000;
-
-  $container.find('.prev-date').text(format(before)).data('time', before);
-  $container.find('.current-date').text(format(selectedDateTime)).data('time', selectedDateTime);
-  $container.find('.next-date').text(format(later)).data('time', later);
-};
 
 
 // times should be passed as ISO strings
