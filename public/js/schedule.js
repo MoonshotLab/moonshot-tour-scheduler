@@ -13,9 +13,7 @@ $(function(){
         markTimesAsBusy(user, new Date(selectedDateTime), busyEvents);
       });
     }
-  });
-
-  dateController.update(new Date().getTime());
+  }).update(new Date().getTime());
 
 
   // Fetch busy data for each user
