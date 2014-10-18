@@ -53,7 +53,7 @@ $(function(){
     $('#form-errors').hide();
     $('#form-errors').html('');
 
-    var errors = validateForm();
+    var errors = [];
     if(errors.length === 0){
       submitForm(collectFormData())
         .then(showFormConfirmation)
@@ -288,11 +288,20 @@ var validateForm = function(){
 
   var scheduler = $('input[name=schedulerEmail]').val();
   var client = $('input[name=client]').val();
+  var startTime = $('input[name=startTime]').val();
+  var endTime = $('input[name=endTime]').val();
+  var date = $('input[name=date]').val();
 
   if(!validateEmail(scheduler))
     errors.push('Your E-Mail address is invalid');
   if(client.length === 0)
     errors.push('Please add a client or group');
+  if(startTime.indexOf(':') == -1)
+    errors.push('Please add a start time');
+  if(endTime.indexOf(':') == -1)
+    errors.push('Please add an end time');
+  if(date.indexOf('-') == -1)
+    errors.push('Please add a date');
 
   return errors;
 };
@@ -332,12 +341,16 @@ var collectFormData = function(){
     });
   });
 
+  var dateVal = $('input[name=date]').val();
+  var startVal = $('input[name=startTime]').val();
+  var endVal = $('input[name=endTime]').val();
+
   var startTime = {
-    dateTime : '2014-10-16T10:00:00',
+    dateTime : [dateVal, 'T', startVal, ':00'].join(''),
     timeZone : defaultTimeZone
   };
   var endTime = {
-    dateTime : '2014-10-16T10:00:00',
+    dateTime : [dateVal, 'T', endVal, ':00'].join(''),
     timeZone : defaultTimeZone
   };
 
