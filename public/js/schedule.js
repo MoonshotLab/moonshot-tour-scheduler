@@ -73,9 +73,27 @@ $(function(){
       $(e.target).parent().remove();
   });
 
-
   // Create the time table selector
-  $('table').timeSelector({ autofill : true, cleanup : true });
+  $('table').timeSelector({
+    autoFill  : true,
+    cleanUp   : true,
+    done      : function(selectedRows){
+      var date = $('.date-controller').find('.current-date').data('time');
+      var $start = $(selectedRows[0]).find('td:first-child');
+      var $end = $(selectedRows[selectedRows.length - 1]).find('td:first-child');
+
+      populateDateTimeFields(date , {
+        start   : {
+          hour  : $start.data('hour'),
+          min   : $start.data('minute')
+        },
+        end     : {
+          hour  : $end.data('hour'),
+          min   : $end.data('minute')
+        }
+      });
+    }
+  });
 });
 
 
@@ -244,6 +262,24 @@ var fetchBusyData = function(userName, timeMin, timeMax){
   });
 
   return deferred.promise;
+};
+
+
+// `date` passed as UTC
+// `times` passed as hour and min as properties of start and end objects
+var populateDateTimeFields = function(dateTime, times){
+  var date = new Date(dateTime);
+
+  $('input[name=date]').val([
+    date.getFullYear(),
+    '-',
+    ('0' + (date.getMonth() + 1)).slice(-2),
+    '-',
+    ('0' + date.getDate()).slice(-2)
+  ].join(''));
+
+  $('input[name=startTime]').val(times.start.hour + ':' + times.start.min);
+  $('input[name=endTime]').val(times.end.hour + ':' + times.end.min);
 };
 
 

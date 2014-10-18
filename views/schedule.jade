@@ -45,6 +45,8 @@ html
                     h4= user.displayName
             tbody
               - for(var hours=9; hours<18; hours++){
+                - if(hours < 10) { hours = '0' + hours; }
+
                 - for(var minutes=0; minutes< 60; minutes+=15){
                   tr
                     - var displayHours = hours;
@@ -52,14 +54,14 @@ html
                     - if(hours > 12) { displayHours = hours - 12; }
                     - if(minutes == 0) { displayMinutes = '00'; }
 
-                    td
+                    td(data-hour=hours, data-minute=displayMinutes)
                       p(unselectable='on')
                         span.hour= displayHours
                         span.colon :
                         span.minute= displayMinutes
 
                     each user in users
-                      td(class="user-#{user._id}", data-hour=hours, data-minute=minutes)
+                      td(class="user-#{user._id}", data-hour=hours, data-minute=displayMinutes)
                 - }
               - }
 
