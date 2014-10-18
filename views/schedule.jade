@@ -13,6 +13,7 @@ html
     script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
     script(src='/js/date-controller.js')
     script(src='/js/time-selector.js')
+    script(src='/js/friend-selector.js')
     script(src='/js/schedule.js')
     script.
       var users = !{JSON.stringify(users)};
@@ -97,14 +98,14 @@ html
             textarea.form-control(name='description')
 
       .row
-        .col-xs-12
+        .col-xs-12.friend-selector
           .form-group.add-friends
             label Add More People
-            #friend-errors.alert.alert-warning
+            .errors.alert.alert-warning
             .input-group
               input.form-control(type='text', placeholder='yourfriend@email.com', name='yourFriend')
               span.input-group-btn
-                button#add-friend.btn.btn-default.btn-success(type='button') +
+                button.btn.btn-default.btn-success(type='button') +
           ul.list-group.friends
 
       .row

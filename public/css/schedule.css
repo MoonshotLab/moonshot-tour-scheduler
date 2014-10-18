@@ -92,16 +92,16 @@ table.time-table tbody tr:nth-child(2n+1) span.hour {
 table.time-table tbody tr:nth-child(2n+1) span.minute {
   padding-top: 0px;
 }
-.add-friends {
+.friend-selector .add-friends {
   margin-bottom: 0;
 }
-#friend-errors {
+.friend-selector .errors {
   display: none;
 }
-ul.friends li:first-child {
+.friend-selector ul.friends li:first-child {
   border-top: none;
 }
-ul.friends a.badge {
+.friend-selector ul.friends a.badge {
   background-color: #ff0039;
   padding-bottom: 5px;
 }

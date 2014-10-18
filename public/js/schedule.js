@@ -2,8 +2,7 @@ var defaultTimeZone = 'America/Chicago';
 
 $(function(){
 
-  // prepopulate the date picker and attache event listeners to the prev and
-  // next date selectors
+  // prepopulate the date picker and attach dom event listeners
   var dateController = $('.date-controller').dateController({
     onUpdate : function(selectedDateTime){
       $('td').removeClass('busy past');
@@ -64,13 +63,8 @@ $(function(){
 
 
   // Add and remove friends
-  $('#add-friend').click(addFriend);
-  $('input[name=yourFriend]').keyup(addFriend);
-  $('ul.friends').click(function(e){
-    e.preventDefault();
-    if($(e.target).hasClass('delete-friend'))
-      $(e.target).parent().remove();
-  });
+  $('.friend-selector').friendSelector();
+
 
   // Create the time table selector
   $('table').timeSelector({
@@ -361,35 +355,4 @@ var submitForm = function(formData){
 
 var showFormConfirmation = function(formData){
   console.log(formData);
-};
-
-
-var addFriend = function(e){
-  var execute = function(){
-    var $errs = $('#friend-errors');
-    $errs.hide();
-    $errs.html('');
-
-    var friendEmail = $('input[name=yourFriend]').val();
-    if(!validateEmail(friendEmail)){
-      $errs.append('<p>not a valid email :(</p>');
-      $errs.show();
-    } else{
-      $('ul.friends').append([
-        '<li class="list-group-item">',
-          '<span class="email">',
-            friendEmail,
-          '</span>',
-          '<a class="badge delete-friend" href="#">x</a>',
-        '</li>'
-      ].join(''));
-
-      $('input[name=yourFriend]').val('');
-    }
-  };
-
-  e.preventDefault();
-  if(e.keyCode){
-    if(e.keyCode == 13) execute();
-  } else execute();
 };
