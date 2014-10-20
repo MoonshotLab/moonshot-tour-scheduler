@@ -73,7 +73,6 @@ $(function(){
       submitForm(collectFormData())
         .then(showFormConfirmation)
         .fail(function(err){
-          console.log(err);
           alert(err.statusText);
         });
     }
@@ -343,7 +342,7 @@ var collectFormData = function(){
 
   var note = '';
   if($('input[name=number-attending]').val())
-    note = $('input[name=number-attending]').val() + ' people attending.';
+    note = '- ' + $('input[name=number-attending]').val() + ' people attending.';
 
   return {
     summary     : 'Moonshot Lab Tour ' + 'for ' + $('input[name=client]').val(),
@@ -382,8 +381,12 @@ var populateConfirmModal = function(formData){
     var key = prop;
     var data = formData[prop];
 
-    if(key == 'start' || key == 'end')
-      data = formData[prop].dateTime;
+    if(key == 'start' || key == 'end'){
+      var humanTime = formData[prop].dateTime.replace('T' , ' ');
+      humanTime = humanTime.substring(0, 16);
+      data = humanTime;
+    }
+
     if(key == 'attendees'){
       data = '';
       formData[prop].forEach(function(attendee){
