@@ -73,7 +73,8 @@ $(function(){
       submitForm(collectFormData())
         .then(showFormConfirmation)
         .fail(function(err){
-          alert(err.responseText);
+          console.log(err);
+          alert(err.statusText);
         });
     }
   });
@@ -371,7 +372,7 @@ var submitForm = function(formData){
 
 
 var showFormConfirmation = function(formData){
-  console.log(formData);
+  alert('Thanks, your time has been booked');
 };
 
 
