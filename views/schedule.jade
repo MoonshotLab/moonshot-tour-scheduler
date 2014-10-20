@@ -119,4 +119,39 @@ html
           #form-errors.alert.alert-warning
       .row
         .col-xs-12
-          button.text-right.btn.btn-primary#submit-form(type='button') Submit
+          button.text-right.btn.btn-primary#validate(type='button') Review and Confirm
+
+      .modal.fade#confirm-modal
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal')
+                span(aria-hidden=true) &times;
+                span.sr-only Close
+              h3 Confirm Tour
+            .modal-body
+              .alert.alert-warning.errors
+              ul
+                li.summary
+                  span.title Title
+                  span.contents
+                li.description
+                  span.title Description
+                  span.contents
+                li.start
+                  span.title Start Date/Time
+                  span.contents
+                li.end
+                  span.title End Date/Time
+                  span.contents
+                li.attendees
+                  span.title Attendees
+                  ul.contents
+
+              .checkbox
+                label
+                  input(type='checkbox', name='promise')
+                  = "I promise not to be late"
+            .modal-footer
+              button.btn.btn-default(data-dismiss='modal') Cancel
+              button.btn.btn-primary#submit Book Reservation

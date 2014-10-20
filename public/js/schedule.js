@@ -42,21 +42,40 @@ $(function(){
   });
 
 
-  // Handle form submission
-  $('#submit-form').click(function(e){
-    e.preventDefault();
-
+  // Check for errors, show form confirmation
+  $('#validate').click(function(){
     $('#form-errors').hide();
     $('#form-errors').html('');
 
     var errors = validateForm();
     if(errors.length === 0){
+      $('#confirm-modal').modal();
+      populateConfirmModal(collectFormData());
+    } else showFormErrors(errors);
+  });
+
+
+  // Submit form
+  $('#submit').click(function(){
+    var checkPromise = function(){
+      var $container = $('#confirm-modal');
+      $container.find('.errors').hide();
+      $container.find('.errors').html();
+
+      if(!$container.find('input[name=promise]:checked').length){
+        $container.find('.errors').html('Please, please promise to be on time');
+        $container.find('.errors').show();
+        return false;
+      } else return true;
+    };
+
+    if(checkPromise()){
       submitForm(collectFormData())
         .then(showFormConfirmation)
         .fail(function(err){
           alert(err.responseText);
         });
-    } else showFormErrors(errors);
+    }
   });
 
 
@@ -353,4 +372,25 @@ var submitForm = function(formData){
 
 var showFormConfirmation = function(formData){
   console.log(formData);
+};
+
+
+var populateConfirmModal = function(formData){
+  var $container = $('#confirm-modal');
+  for(var prop in formData){
+    var key = prop;
+    var data = formData[prop];
+
+    if(key == 'start' || key == 'end')
+      data = formData[prop].dateTime;
+    if(key == 'attendees'){
+      data = '';
+      formData[prop].forEach(function(attendee){
+        var template = '<li>' + attendee.email + '</li>';
+        data += template;
+      });
+    }
+
+    $container.find('.' + key).find('.contents').html(data);
+  }
 };

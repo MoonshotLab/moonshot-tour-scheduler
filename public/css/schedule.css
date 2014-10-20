@@ -108,6 +108,36 @@ table.time-table tbody tr:nth-child(2n+1) span.minute {
 #form-errors {
   display: none;
 }
+#confirm-modal .alert {
+  display: none;
+}
+#confirm-modal ul {
+  padding-left: 0;
+}
+#confirm-modal li {
+  list-style-type: none;
+  margin-bottom: 5px;
+}
+#confirm-modal ul.contents {
+  margin-left: 150px;
+  margin-top: -20px;
+}
+#confirm-modal ul.contents li {
+  margin-bottom: 0px;
+}
+#confirm-modal .title {
+  font-weight: bold;
+  display: inline-block;
+  min-width: 150px;
+}
+#confirm-modal .checkbox {
+  margin-left: 145px;
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+#confirm-modal .checkbox label {
+  font-weight: bold;
+}
 @media only screen and (min-width: 320px) {
   .date-controller a {
     font-size: 0.8em;
