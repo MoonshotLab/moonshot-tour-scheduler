@@ -5,17 +5,12 @@ $(function(){
 
   // Init Calendar
   window.calendar_languages['en-US'] = {
-    d0: 'Su',
-    d1: 'Mo',
-    d2: 'Tu',
-    d3: 'We',
-    d4: 'Th',
-    d5: 'Fr',
-    d6: 'Sa'
+    d0: 'Su', d1: 'Mo', d2: 'Tu', d3: 'We', d4: 'Th', d5: 'Fr', d6: 'Sa'
   };
 
   // Create the calendar
-  var calendar = $('#calendar').calendar({
+  var $calendar = $('#calendar');
+  var calendar = $calendar.calendar({
     tmpl_path       : '/calendar-templates/',
     language        : 'en-US',
     events_source   : function () { return []; },
@@ -28,15 +23,17 @@ $(function(){
 
   // Mark today as selected
   setTimeout(function(){
-    $('#calendar').find('.cal-day-today').addClass('cal-day-selected');
+    $calendar.find('.cal-day-today').addClass('cal-day-selected');
   }, 500);
 
   // Deal with clicks and stuff or whatever
-  $('#calendar').click(function(e){
+  $calendar.click(function(e){
     var $target = $(e.target);
-    var selectedDateTime = $target.data('cal-date');
-    if(selectedDateTime){
-      $('#calendar').find('.cal-day-selected').removeClass('cal-day-selected');
+    var calendarDate = $target.data('cal-date');
+    if(calendarDate){
+      // I don't know why this is necessary
+      var selectedDateTime = new Date(Date.parse(calendarDate) + 86400000);
+      $calendar.find('.cal-day-selected').removeClass('cal-day-selected');
 
       $target.parent().addClass('cal-day-selected');
       $('td').removeClass('busy past');
@@ -54,6 +51,7 @@ $(function(){
     var directive = $(this).data('directive');
     calendar.navigate(directive);
   });
+
 
   // Fetch busy data for each user
   var now = new Date();
