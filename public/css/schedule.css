@@ -61,6 +61,7 @@ h3.availability {
 }
 table.time-table {
   display: none;
+  position: relative;
   margin-bottom: 50px;
 }
 table.time-table thead {
@@ -68,6 +69,7 @@ table.time-table thead {
 }
 table.time-table thead th {
   border-bottom: none;
+  height: 55px;
 }
 table.time-table thead h4 {
   text-align: center;
@@ -75,30 +77,86 @@ table.time-table thead h4 {
   margin-bottom: 0;
 }
 table.time-table tbody tr {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-}
-table.time-table tbody tr.selected td {
-  background-color: #9954bb;
-}
-table.time-table tbody tr.selected td:first-child {
-  background-color: #fff;
-}
-table.time-table tbody td {
-  transition: 0.1s linear background-color;
   cursor: pointer;
 }
-table.time-table tbody td.busy {
-  background-color: #ff0039;
+table.time-table tbody tr:nth-child(odd) td {
+  border-top-style: dashed;
 }
-table.time-table tbody td.past {
-  background-color: rgba(0,0,0,0.07);
+table.time-table tbody tr:nth-child(odd) td:first-child {
+  border: none;
+}
+table.time-table tbody tr:nth-child(odd) td:first-child p {
+  display: none;
+}
+table.time-table tbody tr.selector {
+  transition: 0.25s ease-out top;
+  top: 55px;
+  position: absolute;
+  width: 100%;
+  cursor: pointer;
+}
+table.time-table tbody tr.selector td {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+table.time-table tbody tr.selector td:first-child {
+  background-color: transparent;
+}
+table.time-table tbody tr.selector td:first-child p {
+  display: block;
+}
+table.time-table tbody tr.selector td:last-child {
+  width: 100%;
+  transition: 0.25s ease-out height;
+  border: 1px dotted #9954bb;
+  background-color: rgba(153,84,187,0.5);
+}
+table.time-table tbody tr .time-chooser {
+  float: right;
+  font-size: 0.8em;
+  height: 100%;
+  margin-right: -5px;
+}
+table.time-table tbody tr .time-chooser .time {
+  float: left;
+  padding-right: 25px;
+  color: #713a8c;
+}
+table.time-table tbody tr .time-chooser .choice {
+  overflow: hidden;
+  position: relative;
+  height: 50%;
+}
+table.time-table tbody tr .time-chooser .choice:first-child .indicator {
+  border-top: none;
+}
+table.time-table tbody tr .time-chooser .indicator {
+  right: 0;
+  position: absolute;
+  width: 22px;
+  height: 100%;
+  border: 1px solid rgba(153,84,187,0.6);
+  border-bottom: none;
+  border-right: none;
+  background-color: rgba(153,84,187,0.3);
+  text-align: center;
+  color: #fff;
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 75%;
 }
 table.time-table tbody td {
   border-color: rgba(0,0,0,0.02);
   height: 40px;
   padding: 4px;
   background-color: #fff;
+  transition: 0.1s linear background-color;
+}
+table.time-table tbody td.busy {
+  background-color: #ff0039;
+}
+table.time-table tbody td.past {
+  background-color: rgba(0,0,0,0.07);
 }
 table.time-table tbody td p {
   width: 37px;
@@ -114,15 +172,6 @@ table.time-table tbody td p span.hour {
 }
 table.time-table tbody td p span.minute {
   padding-top: 0px;
-}
-table.time-table tbody tr:nth-child(even) td {
-  border-top-style: dashed;
-}
-table.time-table tbody tr:nth-child(even) td:first-child {
-  border: none;
-}
-table.time-table tbody tr:nth-child(even) td:first-child p {
-  display: none;
 }
 .friend-selector .add-friends {
   margin-bottom: 0;

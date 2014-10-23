@@ -118,34 +118,35 @@ $(function(){
 
   // Add and remove friends
   $('.friend-selector').friendSelector();
+  $('table').timeSelector();
 
 
   // Create the time table selector
-  $('table').timeSelector({
-    autoFill  : true,
-    cleanUp   : true,
-    done      : function(selectedRows){
-      var date = new Date(
-          Date.parse(
-            $calendar.find('.cal-day-selected')
-            .find('span').data('cal-date')
-          ) + 86400000
-      );
-      var $start = $(selectedRows[0]).find('td:first-child');
-      var $end = $(selectedRows[selectedRows.length - 1]).find('td:first-child');
-
-      populateDateTimeFields(date , {
-        start   : {
-          hour  : $start.data('hour'),
-          min   : $start.data('minute')
-        },
-        end     : {
-          hour  : $end.data('hour'),
-          min   : $end.data('minute')
-        }
-      });
-    }
-  });
+  // $('table').timeSelector({
+  //   autoFill  : true,
+  //   cleanUp   : true,
+  //   done      : function(selectedRows){
+  //     var date = new Date(
+  //         Date.parse(
+  //           $calendar.find('.cal-day-selected')
+  //           .find('span').data('cal-date')
+  //         ) + 86400000
+  //     );
+  //     var $start = $(selectedRows[0]).find('td:first-child');
+  //     var $end = $(selectedRows[selectedRows.length - 1]).find('td:first-child');
+  //
+  //     populateDateTimeFields(date , {
+  //       start   : {
+  //         hour  : $start.data('hour'),
+  //         min   : $start.data('minute')
+  //       },
+  //       end     : {
+  //         hour  : $end.data('hour'),
+  //         min   : $end.data('minute')
+  //       }
+  //     });
+  //   }
+  // });
 });
 
 

@@ -107,6 +107,18 @@ html
                   th.col-sm-3
                     h5.text-center= user.displayName
             tbody
+              tr.selector
+                td
+                  p
+                td(colspan=users.length)
+                  .time-chooser
+                    .choice(data-value='30')
+                      .time 30 min.
+                      .indicator &times;
+                    .choice(data-value='60')
+                      .time 60 min.
+                      .indicator
+
               - for(var hours=8; hours<18; hours++){
                 - for(var minutes=0; minutes< 60; minutes+=30){
                   tr
@@ -131,10 +143,9 @@ html
                         span.minute= displayMinutes
 
                     each user in users
-                      td(class="user-#{user._id}", data-hour=hours, data-minute=displayMinutes)
+                      td(class="user-#{user._id}", data-hour=dataHours, data-minute=dataMinutes)
                 - }
               - }
-
 
       .modal.fade#confirm-modal
         .modal-dialog

@@ -54,43 +54,93 @@ table.time-table
   // hide until we're ready to load
   display none
 
+  position relative
   margin-bottom 50px
 
   thead
     background-color rgba(0,0,0,.02)
     th
       border-bottom none
+      height 55px
     h4
       text-align center
       margin-top 0
       margin-bottom 0
 
+
   tbody
-    // Selecting table rows, keep the time block unselected
     tr
-      -webkit-user-select none
-      -moz-user-select none
-      &.selected
-        td
-          background-color #9954bb
-        td:first-child
-          background-color white
-
-    // Make table elements selectable, animate
-    td
-      transition .1s linear background-color
       cursor pointer
-      &.busy
-        background-color #ff0039
-      &.past
-        background-color rgba(0,0,0,.07)
 
-    //
+      // Hide the minute times
+      &:nth-child(odd)
+        td
+          border-top-style dashed
+        td:first-child
+          border none
+          p
+            display none
+
+      &.selector
+        transition .25s ease-out top
+        top 55px
+        position absolute
+        width 100%
+        cursor pointer
+        td
+          padding-top 0
+          padding-bottom 0
+        td:first-child
+          background-color transparent
+          p
+            display block
+        td:last-child
+          width 100%
+          transition .25s ease-out height
+          border 1px dotted #9954bb
+          background-color rgba(153,84,187,.5)
+
+      .time-chooser
+        float right
+        font-size .8em
+        height 100%
+        margin-right -5px
+        .time
+          float left
+          padding-right 25px
+          color #713A8C
+        .choice
+          overflow hidden
+          position relative
+          height 50%
+          &:first-child
+            .indicator
+              border-top none
+        .indicator
+          right 0
+          position absolute
+          width 22px
+          height 100%
+          border 1px solid rgba(153,84,187,.6)
+          border-bottom none
+          border-right none
+          background-color rgba(153,84,187,.3)
+          text-align center
+          color white
+          font-size 2em
+          font-weight bold
+          line-height 75%
+
     td
       border-color rgba(0,0,0,.02)
       height 40px
       padding 4px
       background-color white
+      transition .1s linear background-color
+      &.busy
+        background-color #ff0039
+      &.past
+        background-color rgba(0,0,0,.07)
       p
         width 37px
         text-align center
@@ -103,15 +153,6 @@ table.time-table
           display inline
         span.minute
           padding-top 0px
-
-    // Hide the minute times
-    tr:nth-child(even)
-      td
-        border-top-style dashed
-      td:first-child
-        border none
-        p
-          display none
 
 
 // Adding additional invitees
