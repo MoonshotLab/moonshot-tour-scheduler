@@ -2,8 +2,6 @@ body {
   background-color: #222;
 }
 .container {
-  padding-left: 30px;
-  padding-right: 30px;
   background-color: #fff;
   padding-bottom: 50px;
 }
@@ -30,6 +28,9 @@ table.time-table {
 table.time-table thead {
   background-color: rgba(0,0,0,0.02);
 }
+table.time-table thead th {
+  border-bottom: none;
+}
 table.time-table thead h4 {
   text-align: center;
   margin-top: 0;
@@ -48,10 +49,6 @@ table.time-table tbody tr.selected td:first-child {
 table.time-table tbody td {
   transition: 0.1s linear background-color;
   cursor: pointer;
-  border-color: rgba(0,0,0,0.02);
-  height: 18px;
-  padding: 0;
-  background-color: #fff;
 }
 table.time-table tbody td.busy {
   background-color: #ff0039;
@@ -59,29 +56,35 @@ table.time-table tbody td.busy {
 table.time-table tbody td.past {
   background-color: rgba(0,0,0,0.07);
 }
-table.time-table tbody p {
+table.time-table tbody td {
+  border-color: rgba(0,0,0,0.02);
+  height: 24px;
+  padding: 4px;
+  background-color: #fff;
+}
+table.time-table tbody td p {
   width: 37px;
   text-align: center;
   margin: 0;
   font-size: 0.5em;
+  color: #000;
+  font-size: 1em;
   color: rgba(0,0,0,0.5);
 }
-table.time-table tbody p span.hour {
-  display: none;
-}
-table.time-table tbody p span.minute {
-  display: inline-block;
-  padding-top: 3px;
-}
-table.time-table tbody tr:nth-child(2n+1) p {
-  color: #000;
-  font-size: 0.8em;
-}
-table.time-table tbody tr:nth-child(2n+1) span.hour {
+table.time-table tbody td p span.hour {
   display: inline;
 }
-table.time-table tbody tr:nth-child(2n+1) span.minute {
+table.time-table tbody td p span.minute {
   padding-top: 0px;
+}
+table.time-table tbody tr:nth-child(even) td {
+  border-top-style: dashed;
+}
+table.time-table tbody tr:nth-child(even) td:first-child {
+  border: none;
+}
+table.time-table tbody tr:nth-child(even) td:first-child p {
+  display: none;
 }
 .friend-selector .add-friends {
   margin-bottom: 0;

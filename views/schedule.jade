@@ -102,17 +102,24 @@ html
                   th.col-sm-3
                     h5.text-center= user.displayName
             tbody
-              - for(var hours=9; hours<18; hours++){
-                - if(hours < 10) { hours = '0' + hours; }
-
-                - for(var minutes=0; minutes< 60; minutes+=15){
+              - for(var hours=8; hours<18; hours++){
+                - for(var minutes=0; minutes< 60; minutes+=30){
                   tr
                     - var displayHours = hours;
-                    - var displayMinutes = minutes;
-                    - if(hours > 12) { displayHours = hours - 12; }
-                    - if(minutes == 0) { displayMinutes = '00'; }
+                    - var dataHours = hours;
+                    - if(hours > 12) {
+                      - displayHours = hours - 12;
+                      - dataHours = hours - 12;
+                    - }
+                    - if(hours < 10) { dataHours = '0' + dataHours; }
 
-                    td(data-hour=hours, data-minute=displayMinutes)
+                    - var displayMinutes = minutes;
+                    - var dataMinutes = minutes;
+                    - if(minutes == 0) {
+                      - displayMinutes = '00';
+                      - dataMinutes = '00';
+                    - }
+                    td(data-hour=dataHours, data-minute=dataMinutes)
                       p(unselectable='on')
                         span.hour= displayHours
                         span.colon :
