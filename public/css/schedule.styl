@@ -6,19 +6,39 @@ body
   padding-bottom 50px
 
 
-.text-description
-  margin-bottom 15px
+.page-header
+  margin-top 10px
+
+h3.availability
+  margin-top 0
 
 
-.date-controller
-  text-align center
-  margin-top 20px
-  .col
-    background-color #222222
-  .btn-link
-    background-color rgba(0,0,0,.02)
-    &:hover
-      text-decoration none
+#calendar
+  margin-bottom 30px
+  .cal-year-box [class*="span"], .cal-month-box [class*="cal-cell"], .cal-month-day
+    min-height 50px
+    height 50px
+  .cal-month-day
+    display table
+  .cal-month-box .cal-day-today span[data-cal-date]
+    font-size 1em
+  .cal-day-today
+    background-color black
+  .cal-day-today span[data-cal-date]
+    opacity 1
+    color white
+  .cal-day-selected
+    background-color #7e3f9d
+    span[data-cal-date]
+      opacity 1
+      color white
+  span[data-cal-date]
+    margin 0
+    display table-cell
+    text-align center
+    vertical-align middle
+  #cal-week-box
+    display none !important
 
 
 table.time-table
@@ -59,7 +79,7 @@ table.time-table
     //
     td
       border-color rgba(0,0,0,.02)
-      height 30px
+      height 35px
       padding 4px
       background-color white
       p

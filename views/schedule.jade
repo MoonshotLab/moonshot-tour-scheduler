@@ -5,13 +5,14 @@ html
     meta(name='viewport' content='width=device-width, user-scalable=no')
     link(rel='stylesheet', href='/vendor/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/bootswatch-dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/vendor/bootstrap-calendar/css/calendar.css')
     link(rel='stylesheet', href='/css/schedule.css')
 
     script(src='/vendor/q/q.js')
     script(src='/vendor/underscore/underscore.js')
-    script(src='/vendor/jquery/dist/jquery.min.js')
+    script(src='/vendor/jquery/jquery.min.js')
     script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
-    script(src='/js/date-controller.js')
+    script(src='vendor/bootstrap-calendar/js/calendar.js')
     script(src='/js/time-selector.js')
     script(src='/js/friend-selector.js')
     script(src='/js/schedule.js')
@@ -24,15 +25,12 @@ html
         .col-sm-12.page-header
           h1 Moonshot Lab <small>Schedule a Tour</small>
 
-      .date-controller.row
-        .col-xs-12
-          btn.group
-            a.prev-date.btn.btn-primary(href='#')
-            a.current-date.btn.btn-link(href='#')
-            a.next-date.btn.btn-primary(href='#')
-
       .row
         .col-sm-4
+          .row
+            .col-sm-12
+              #calendar
+
           .row
             .col-sm-6
               .form-group
@@ -94,7 +92,7 @@ html
 
 
         .col-sm-8
-          h3.text-center Moonshot Partner Availability
+          h3.text-center.availability Moonshot Partner Availability
           table.table.time-table
             thead
               tr.row

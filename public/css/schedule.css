@@ -5,21 +5,49 @@ body {
   background-color: #fff;
   padding-bottom: 50px;
 }
-.text-description {
-  margin-bottom: 15px;
+.page-header {
+  margin-top: 10px;
 }
-.date-controller {
+h3.availability {
+  margin-top: 0;
+}
+#calendar {
+  margin-bottom: 30px;
+}
+#calendar .cal-year-box [class*="span"],
+#calendar .cal-month-box [class*="cal-cell"],
+#calendar .cal-month-day {
+  min-height: 50px;
+  height: 50px;
+}
+#calendar .cal-month-day {
+  display: table;
+}
+#calendar .cal-month-box .cal-day-today span[data-cal-date] {
+  font-size: 1em;
+}
+#calendar .cal-day-today {
+  background-color: #000;
+}
+#calendar .cal-day-today span[data-cal-date] {
+  opacity: 1;
+  color: #fff;
+}
+#calendar .cal-day-selected {
+  background-color: #7e3f9d;
+}
+#calendar .cal-day-selected span[data-cal-date] {
+  opacity: 1;
+  color: #fff;
+}
+#calendar span[data-cal-date] {
+  margin: 0;
+  display: table-cell;
   text-align: center;
-  margin-top: 20px;
+  vertical-align: middle;
 }
-.date-controller .col {
-  background-color: #222;
-}
-.date-controller .btn-link {
-  background-color: rgba(0,0,0,0.02);
-}
-.date-controller .btn-link:hover {
-  text-decoration: none;
+#calendar #cal-week-box {
+  display: none !important;
 }
 table.time-table {
   display: none;
@@ -58,7 +86,7 @@ table.time-table tbody td.past {
 }
 table.time-table tbody td {
   border-color: rgba(0,0,0,0.02);
-  height: 24px;
+  height: 35px;
   padding: 4px;
   background-color: #fff;
 }

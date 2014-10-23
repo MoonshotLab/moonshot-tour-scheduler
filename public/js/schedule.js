@@ -1,10 +1,38 @@
 var defaultTimeZone = 'America/Chicago';
+window.calendar_languages = {};
 
 $(function(){
 
-  // prepopulate the date picker and attach dom event listeners
-  var dateController = $('.date-controller').dateController({
-    onUpdate : function(selectedDateTime){
+  // Init Calendar
+  window.calendar_languages['en-US'] = {
+    d0: 'Su',
+    d1: 'Mo',
+    d2: 'Tu',
+    d3: 'We',
+    d4: 'Th',
+    d5: 'Fr',
+    d6: 'Sa'
+  };
+  // Create Overwrite the update function
+  var calendar = $('#calendar').calendar({
+    tmpl_path     : '/calendar-templates/',
+    language      : 'en-US',
+    events_source : function () { return []; }
+  })._update = function(){};
+
+  // Mark today as selected
+  setTimeout(function(){
+    $('#calendar').find('.cal-day-today').addClass('cal-day-selected');
+  }, 500);
+
+  // Deal with clicks and stuff or whatever
+  $('#calendar').click(function(e){
+    var $target = $(e.target);
+    var selectedDateTime = $target.data('cal-date');
+    if(selectedDateTime){
+      $('#calendar').find('.cal-day-selected').removeClass('cal-day-selected');
+
+      $target.parent().addClass('cal-day-selected');
       $('td').removeClass('busy past');
       $('tr').removeClass('selected');
 
@@ -13,7 +41,7 @@ $(function(){
         markTimesAsBusy(user, new Date(selectedDateTime), busyEvents);
       });
     }
-  }).update(new Date().getTime());
+  });
 
 
   // Fetch busy data for each user
