@@ -29,6 +29,13 @@ html
         .col-sm-4
           .row
             .col-sm-12
+              .row.date-controller
+                .col-sm-3
+                  button.btn.btn-default(data-directive='prev') Prev
+                .col-sm-6.calendar-month-container
+                  h4.text-center.calendar-month
+                .col-sm-3
+                  button.btn.btn-default(data-directive='next') Next
               #calendar
 
           .row

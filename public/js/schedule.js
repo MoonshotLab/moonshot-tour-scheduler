@@ -13,12 +13,18 @@ $(function(){
     d5: 'Fr',
     d6: 'Sa'
   };
-  // Create Overwrite the update function
+
+  // Create the calendar
   var calendar = $('#calendar').calendar({
-    tmpl_path     : '/calendar-templates/',
-    language      : 'en-US',
-    events_source : function () { return []; }
-  })._update = function(){};
+    tmpl_path       : '/calendar-templates/',
+    language        : 'en-US',
+    events_source   : function () { return []; },
+    onAfterViewLoad : function(view){
+      $('.calendar-month').text(this.getTitle());
+    }
+  });
+  // Overwrite the update function
+  calendar._update = function(){};
 
   // Mark today as selected
   setTimeout(function(){
@@ -43,6 +49,11 @@ $(function(){
     }
   });
 
+  // Make the date buttons change up the calendar
+  $('.date-controller').find('.btn').click(function(){
+    var directive = $(this).data('directive');
+    calendar.navigate(directive);
+  });
 
   // Fetch busy data for each user
   var now = new Date();
