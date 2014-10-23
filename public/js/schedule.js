@@ -125,7 +125,12 @@ $(function(){
     autoFill  : true,
     cleanUp   : true,
     done      : function(selectedRows){
-      var date = $('.date-controller').find('.current-date').data('time');
+      var date = new Date(
+          Date.parse(
+            $calendar.find('.cal-day-selected')
+            .find('span').data('cal-date')
+          ) + 86400000
+      );
       var $start = $(selectedRows[0]).find('td:first-child');
       var $end = $(selectedRows[selectedRows.length - 1]).find('td:first-child');
 
