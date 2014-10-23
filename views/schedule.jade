@@ -24,10 +24,6 @@ html
         .col-sm-12.page-header
           h1 Moonshot Lab <small>Schedule a Tour</small>
 
-      .row.text-description
-        .col-xs-12
-          blockquote Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim quam eu euismod ultricies. Ut at pellentesque diam. In cursus risus faucibus rutrum molestie.
-
       .date-controller.row
         .col-xs-12
           btn.group
@@ -36,15 +32,75 @@ html
             a.next-date.btn.btn-primary(href='#')
 
       .row
-        .col-xs-12
+        .col-sm-4
+          .row
+            .col-sm-6
+              .form-group
+                label Start Time
+                input.form-control(type='time', name='startTime')
+            .col-sm-6
+              .form-group
+                label End Time
+                input.form-control(type='time', name='endTime')
+
+          .row
+            .col-sm-12
+              .form-group
+                label Date
+                input.form-control(type='date', name='date')
+
+          .row
+            .col-sm-12
+              .form-group
+                label Client/Group
+                input.form-control(type='text', placeholder='Barkley', name='client', required)
+
+          .row
+            .col-sm-12
+              .form-group
+                label Number of People Attending
+                input.form-control(type='number', placeholder='2', name='number-attending')
+
+          .row
+            .col-sm-12.friend-selector
+              .form-group.add-friends
+                label Invite Others
+                .errors.alert.alert-warning
+                .input-group
+                  input.form-control(type='text', placeholder='yourfriend@email.com', name='yourFriend')
+                  span.input-group-btn
+                    button.btn.btn-default.btn-success(type='button') +
+              ul.list-group.friends
+
+          .row
+            .col-sm-12
+              .form-group
+                label Note / Special Requests
+                textarea.form-control(name='description')
+
+          .row.hidden
+            .col-sm-12
+              .form-group
+                label Your Email
+                input.form-control(type='text', name='schedulerEmail', value=schedulerEmail, disabled, required)
+
+          .row
+            .col-sm-12
+              #form-errors.alert.alert-warning
+
+          .row
+            .col-sm-12
+              button.text-right.btn.btn-primary#validate(type='button') Review and Confirm
+
+
+        .col-sm-8
+          h3.text-center Moonshot Partner Availability
           table.table.time-table
             thead
-              tr
-                th
+              tr.row
                 each user in users
-                  th
-                    .pic(style="background-image:url(#{user.picturePath})")
-                    h4= user.displayName
+                  th.col-sm-3
+                    h5.text-center= user.displayName
             tbody
               - for(var hours=9; hours<18; hours++){
                 - if(hours < 10) { hours = '0' + hours; }
@@ -67,59 +123,6 @@ html
                 - }
               - }
 
-      .row
-        .col-sm-6
-          .form-group
-            label Date
-            input.form-control(type='date', name='date')
-        .col-sm-3
-          .form-group
-            label Start Time
-            input.form-control(type='time', name='startTime')
-        .col-sm-3
-          .form-group
-            label End Time
-            input.form-control(type='time', name='endTime')
-
-      .row
-        .col-sm-8
-          .form-group
-            label Client/Group
-            input.form-control(type='text', placeholder='Barkley', name='client', required)
-        .col-sm-4
-          .form-group
-            label Number of People Attending
-            input.form-control(type='number', placeholder='2', name='number-attending')
-
-      .row
-        .col-xs-12
-          .form-group
-            label Note / Special Requests
-            textarea.form-control(name='description')
-
-      .row
-        .col-xs-12.friend-selector
-          .form-group.add-friends
-            label Add More People
-            .errors.alert.alert-warning
-            .input-group
-              input.form-control(type='text', placeholder='yourfriend@email.com', name='yourFriend')
-              span.input-group-btn
-                button.btn.btn-default.btn-success(type='button') +
-          ul.list-group.friends
-
-      .row
-        .col-xs-12
-          .form-group
-            label Your Email
-            input.form-control(type='text', name='schedulerEmail', value=schedulerEmail, disabled, required)
-
-      .row
-        .col-xs-12
-          #form-errors.alert.alert-warning
-      .row
-        .col-xs-12
-          button.text-right.btn.btn-primary#validate(type='button') Review and Confirm
 
       .modal.fade#confirm-modal
         .modal-dialog

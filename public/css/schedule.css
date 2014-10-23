@@ -4,7 +4,6 @@ body {
 .container {
   padding-left: 30px;
   padding-right: 30px;
-  max-width: 900px;
   background-color: #fff;
   padding-bottom: 50px;
 }
@@ -31,17 +30,9 @@ table.time-table {
 table.time-table thead {
   background-color: rgba(0,0,0,0.02);
 }
-table.time-table thead .pic {
-  margin: auto;
-  width: 130px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 130px;
-  height: 130px;
-}
 table.time-table thead h4 {
   text-align: center;
+  margin-top: 0;
   margin-bottom: 0;
 }
 table.time-table tbody tr {
@@ -137,55 +128,4 @@ table.time-table tbody tr:nth-child(2n+1) span.minute {
 }
 #confirm-modal .checkbox label {
   font-weight: bold;
-}
-@media only screen and (min-width: 320px) {
-  .date-controller a {
-    font-size: 0.8em;
-  }
-  .date-controller .col-xs-12 {
-    padding: 0;
-  }
-  table.time-table thead h4 {
-    font-size: 0.75em;
-  }
-  table.time-table thead .pic {
-    width: 50px;
-    height: 50px;
-  }
-}
-@media only screen and (min-width: 480px) {
-  table.time-table thead h4 {
-    font-size: 1em;
-  }
-  table.time-table thead .pic {
-    width: 80px;
-    height: 80px;
-  }
-}
-@media only screen and (min-width: 768px) {
-  table.time-table thead h4 {
-    font-size: 1em;
-  }
-  table.time-table thead .pic {
-    width: 100px;
-    height: 100px;
-  }
-}
-@media only screen and (min-width: 992px) {
-  table.time-table thead h4 {
-    font-size: 1.6em;
-  }
-  table.time-table thead .pic {
-    width: 130px;
-    height: 130px;
-  }
-}
-@media only screen and (min-width: 1200px) {
-  table.time-table thead h4 {
-    font-size: 1.8em;
-  }
-  table.time-table thead .pic {
-    width: 130px;
-    height: 130px;
-  }
 }
