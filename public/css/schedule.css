@@ -206,23 +206,26 @@ table.time-table tbody td p span.minute {
   list-style-type: none;
   margin-bottom: 5px;
 }
+#confirm-modal li label {
+  font-weight: normal;
+}
 #confirm-modal ul.contents {
   margin-left: 150px;
   margin-top: -20px;
 }
 #confirm-modal ul.contents li {
-  margin-bottom: 0px;
+  margin-bottom: 10px;
 }
 #confirm-modal .title {
   font-weight: bold;
   display: inline-block;
   min-width: 150px;
 }
-#confirm-modal .checkbox {
+#confirm-modal .no-late {
   margin-left: 145px;
   margin-top: 30px;
   margin-bottom: 0;
 }
-#confirm-modal .checkbox label {
+#confirm-modal .no-late label {
   font-weight: bold;
 }

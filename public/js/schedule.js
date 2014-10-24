@@ -429,7 +429,14 @@ var populateConfirmModal = function(formData){
       data = '';
       formData[key].forEach(function(attendee){
         var name = attendee.name || attendee.email;
-        var template = '<li>' + name + '</li>';
+        var template = [
+          '<li class="checkbox">',
+            '<label>',
+              '<input type="checkbox" checked value="' + attendee.email + '" />',
+              name,
+            '</label>',
+          '</li>'
+        ].join('');
         data += template;
       });
     }
