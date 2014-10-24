@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "description": "Schedule moonshot tours",
   "main": "index.js",
-  "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install"
-  },
   "keywords": [
     "spark",
     "calendar"

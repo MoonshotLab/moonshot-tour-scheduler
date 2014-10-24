@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
 env-vars.js
-public/vendor/*
-!public/vendor/.gitkeep
+
 npm-debug.log
