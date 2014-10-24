@@ -88,6 +88,10 @@ table.time-table tbody tr:nth-child(odd) td:first-child {
 table.time-table tbody tr:nth-child(odd) td:first-child p {
   display: none;
 }
+table.time-table tbody tr:last-child,
+table.time-table tbody tr:nth-last-child(-n+2) {
+  display: none;
+}
 table.time-table tbody tr.selector {
   transition: 0.25s ease-out top;
   top: 55px;

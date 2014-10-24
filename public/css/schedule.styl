@@ -81,6 +81,10 @@ table.time-table
           p
             display none
 
+      // Allow booking of up to 6:30, but hide the row
+      &:last-child, &:nth-last-child(-n+2)
+        display none
+
       &.selector
         transition .25s ease-out top
         top 55px
