@@ -31,22 +31,22 @@ html
             .col-sm-12
               .row.date-controller
                 .col-sm-3
-                  button.btn.btn-default(data-directive='prev') Prev
+                  button.btn.btn-default(data-directive='prev') &lt;&lt;
                 .col-sm-6.calendar-month-container
                   h4.text-center.calendar-month
                 .col-sm-3
-                  button.btn.btn-default(data-directive='next') Next
+                  button.btn.btn-default(data-directive='next') &gt;&gt;
               #calendar
 
           .row
             .col-sm-6
               .form-group
                 label Start Time
-                input.form-control(type='time', name='startTime')
+                input.form-control(type='time', name='startTime', value='08:00')
             .col-sm-6
               .form-group
                 label End Time
-                input.form-control(type='time', name='endTime')
+                input.form-control(type='time', name='endTime', value='08:30')
 
           .row
             .col-sm-12
@@ -126,7 +126,6 @@ html
                     - var dataHours = hours;
                     - if(hours > 12) {
                       - displayHours = hours - 12;
-                      - dataHours = hours - 12;
                     - }
                     - if(hours < 10) { dataHours = '0' + dataHours; }
 

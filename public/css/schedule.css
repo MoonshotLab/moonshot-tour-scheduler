@@ -130,6 +130,9 @@ table.time-table tbody tr .time-chooser .choice {
 table.time-table tbody tr .time-chooser .choice:first-child .indicator {
   border-top: none;
 }
+table.time-table tbody tr .time-chooser .choice:last-child .indicator {
+  line-height: 150%;
+}
 table.time-table tbody tr .time-chooser .indicator {
   right: 0;
   position: absolute;

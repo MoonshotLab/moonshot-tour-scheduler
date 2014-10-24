@@ -24,24 +24,33 @@ $(function(){
   // Mark today as selected
   setTimeout(function(){
     $calendar.find('.cal-day-today').addClass('cal-day-selected');
+    var calendarDate = $calendar.find('.cal-day-selected').find('span').data('cal-date');
+    $('input[name=date]').val(calendarDate);
   }, 500);
 
   // Deal with clicks and stuff or whatever
   $calendar.click(function(e){
     var $target = $(e.target);
     var calendarDate = $target.data('cal-date');
+
     if(calendarDate){
-      // I don't know why this is necessary
-      var selectedDateTime = new Date(Date.parse(calendarDate) + 86400000);
+      // populate form
+      $('input[name=date]').val(calendarDate);
+
+      // show selected day in calendar view
       $calendar.find('.cal-day-selected').removeClass('cal-day-selected');
-
       $target.parent().addClass('cal-day-selected');
-      $('td').removeClass('busy past');
-      $('tr').removeClass('selected');
 
+      // clean up table
+      $('.time-table').find('td').removeClass('busy past');
+
+      // i don't know why this is necessary :(
+      var selectedDateTime = new Date(Date.parse(calendarDate) + 86400000);
+
+      // check users
       users.forEach(function(user){
-        var busyEvents = findBusyEventsWithinDay(new Date(selectedDateTime), user);
-        markTimesAsBusy(user, new Date(selectedDateTime), busyEvents);
+        var busyEvents = findBusyEventsWithinDay(selectedDateTime, user);
+        markTimesAsBusy(user, selectedDateTime, busyEvents);
       });
     }
   });
@@ -118,35 +127,13 @@ $(function(){
 
   // Add and remove friends
   $('.friend-selector').friendSelector();
-  $('table').timeSelector();
+  $('table').timeSelector({
+    onChange : function(time){
+      $('input[name=startTime]').val(time.start);
+      $('input[name=endTime]').val(time.end);
+    }
+  });
 
-
-  // Create the time table selector
-  // $('table').timeSelector({
-  //   autoFill  : true,
-  //   cleanUp   : true,
-  //   done      : function(selectedRows){
-  //     var date = new Date(
-  //         Date.parse(
-  //           $calendar.find('.cal-day-selected')
-  //           .find('span').data('cal-date')
-  //         ) + 86400000
-  //     );
-  //     var $start = $(selectedRows[0]).find('td:first-child');
-  //     var $end = $(selectedRows[selectedRows.length - 1]).find('td:first-child');
-  //
-  //     populateDateTimeFields(date , {
-  //       start   : {
-  //         hour  : $start.data('hour'),
-  //         min   : $start.data('minute')
-  //       },
-  //       end     : {
-  //         hour  : $end.data('hour'),
-  //         min   : $end.data('minute')
-  //       }
-  //     });
-  //   }
-  // });
 });
 
 
@@ -291,24 +278,6 @@ var fetchBusyData = function(userName, timeMin, timeMax){
   });
 
   return deferred.promise;
-};
-
-
-// `date` passed as UTC
-// `times` passed as hour and min as properties of start and end objects
-var populateDateTimeFields = function(dateTime, times){
-  var date = new Date(dateTime);
-
-  $('input[name=date]').val([
-    date.getFullYear(),
-    '-',
-    ('0' + (date.getMonth() + 1)).slice(-2),
-    '-',
-    ('0' + date.getDate()).slice(-2)
-  ].join(''));
-
-  $('input[name=startTime]').val(times.start.hour + ':' + times.start.min);
-  $('input[name=endTime]').val(times.end.hour + ':' + times.end.min);
 };
 
 
