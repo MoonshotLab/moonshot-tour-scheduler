@@ -1,4 +1,5 @@
 var defaultTimeZone = 'America/Chicago';
+var users = [];
 window.calendar_languages = {};
 
 $(function(){
@@ -48,9 +49,8 @@ $(function(){
       var selectedDateTime = new Date(Date.parse(calendarDate) + 86400000);
 
       // check users
-      users.forEach(function(user){
-        var busyEvents = findBusyEventsWithinDay(selectedDateTime, user);
-        markTimesAsBusy(user, selectedDateTime, busyEvents);
+      window.users.forEach(function(user){
+        user.markTimesAsBusy(selectedDateTime);
       });
     }
   });
@@ -63,29 +63,28 @@ $(function(){
 
 
   // Fetch busy data for each user
-  var now = new Date();
-  var later = now.getTime() + 7884000000;
+  (function(){
+    var now = new Date();
+    var later = now.getTime() + 7884000000;
 
-  var ISOStamps = {
-    now   : now.toISOString(),
-    later : new Date(later).toISOString()
-  };
+    var iso = {
+      now   : now.toISOString(),
+      later : new Date(later).toISOString()
+    };
 
-  users.forEach(function(user){
-    fetchBusyData(
-      user.emails[0].value, ISOStamps.now, ISOStamps.later
-    ).then(function(res){
-      user.calendars = res.calendars;
-      $('.time-table').show();
+    labRats.forEach(function(rat){
+      var user = new User(rat);
 
-      users.forEach(function(user){
-        markTimesAsBusy(user, now, findBusyEventsWithinDay(now, user));
-      });
+      user.fetchBusyData(iso.now, iso.later)
+        .then(function(){
+          user.markTimesAsBusy(now);
+        }).fail(function(e){
+          console.log(e);
+        });
 
-    }).fail(function(err){
-      alert(err);
+      window.users.push(user);
     });
-  });
+  })();
 
 
   // Check for errors, show form confirmation
@@ -148,7 +147,7 @@ $(function(){
     'changeTime'      : timeSelector.update
   };
 
-  var nowTime = now.getTime();
+  var nowTime = new Date().getTime();
   $('input[name=startTime]').timepicker(timeOptions)
     .timepicker('setTime', new Date(nowTime + 1800000))
     .on('changeTime', timeSelector.changeTimes)
@@ -158,150 +157,6 @@ $(function(){
     .on('changeTime', timeSelector.changeTimes)
     .trigger('changeTime');
 });
-
-
-// time should be passed as a javascript date object
-// will make DOM changes
-var markTimesAsBusy = function(user, selectedDate, busyEvents){
-
-  var selector   = 'td.user-' + user._id;
-  var $tableData = $('.time-table').find(selector);
-
-  $tableData.each(function(i, el){
-    var inThePast= false;
-    var markBusy = false;
-    var minute   = parseInt(el.dataset.minute);
-    var hour     = parseInt(el.dataset.hour);
-    var day      = selectedDate.getDate();
-    var month    = selectedDate.getMonth();
-    var year     = selectedDate.getFullYear();
-    var now      = new Date();
-
-    // Is the date viewed in the past?
-    if(day <= now.getDate() && month <= now.getMonth()){
-      if(day == now.getDate() && hour <= now.getHours()) inThePast = true;
-      if(day < now.getDate()) inThePast = true;
-      if(month < now.getMonth()) inThePast = true;
-    }
-
-    if(inThePast) $(el).addClass('past');
-
-    busyEvents.forEach(function(busyEvent){
-      var startMin    = busyEvent.start.getMinutes();
-      var startHour   = busyEvent.start.getHours();
-      var startDay    = busyEvent.start.getDate();
-      var startMonth  = busyEvent.start.getMonth();
-      var startYear   = busyEvent.start.getFullYear();
-      var endMin      = busyEvent.end.getMinutes();
-      var endHour     = busyEvent.end.getHours();
-      var endDay      = busyEvent.end.getDate();
-      var endMonth    = busyEvent.end.getMonth();
-      var endYear     = busyEvent.end.getFullYear();
-
-      // if the full day is booked
-      if(endDay > day || endMonth > month || endYear > year){
-        if(startDay != day || startMonth != month || startYear != year)
-          markBusy = true;
-      }
-
-      // if the event spans multiple days, but is partial on the given day
-      if(startDay != day){
-        startHour = 0;
-        startMinute = 0;
-      } else if(endDay != day){
-        endHour = 23;
-        endMinute = 59;
-      }
-
-      // if part of the day is booked
-      if(hour >= startHour && hour <= endHour){
-        if(hour > startHour && hour < endHour){
-          markBusy = true;
-        } else if(hour == startHour){
-          if(minute >= startMin) markBusy = true;
-        } else if(hour == endHour){
-          if(minute <= endMin) markBusy = true;
-        }
-      }
-    });
-
-    if(markBusy) $(el).addClass('busy');
-  });
-};
-
-
-// time should be passed as a javascript date object
-// returns an array of javascript date objects
-var findBusyEventsWithinDay = function(selectedDate, user){
-  var busyEvents = [];
-
-  var selectedDayMonth = [
-    selectedDate.getDate(),
-    '-',
-    selectedDate.getMonth()
-  ].join('');
-
-  var checkEvent = function(busyEvent){
-    var isBusyEvent = false;
-    var startDate   = new Date(busyEvent.start);
-    var endDate     = new Date(busyEvent.end);
-
-    var startDayMonth = [startDate.getDate(), '-', startDate.getMonth()].join('');
-    var endDayMonth   = [endDate.getDate(), '-', endDate.getMonth()].join('');
-
-    // is there an event "on" this day?
-    if( startDayMonth == selectedDayMonth ||
-        endDayMonth == selectedDayMonth )
-    { isBusyEvent = true; }
-
-    // does the event span multiple days?
-    if( startDate.getTime() < selectedDate.getTime() &&
-        endDate.getTime() > selectedDate.getTime() )
-    { isBusyEvent = true; }
-
-    // append the event if it's busy
-    if(isBusyEvent){
-      busyEvents.push({
-        start : startDate,
-        end   : endDate
-      });
-    }
-  };
-
-  for(var calendar in user.calendars){
-    user.calendars[calendar].busy.forEach(checkEvent);
-  }
-
-  return busyEvents;
-};
-
-
-
-
-
-// times should be passed as ISO strings
-var fetchBusyData = function(userName, timeMin, timeMax){
-  var deferred = Q.defer();
-
-  var earl = [
-    '/isBusy/',
-    userName,
-    '?timeMin=',
-    timeMin,
-    '&timeMax=',
-    timeMax,
-    '&timeZone=',
-    defaultTimeZone
-  ].join('');
-
-  $.ajax({
-    url     : earl,
-    success : deferred.resolve,
-    error   : deferred.reject
-  });
-
-  return deferred.promise;
-};
 
 
 var validateForm = function(){

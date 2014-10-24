@@ -60,7 +60,6 @@ h3.availability {
   display: none !important;
 }
 table.time-table {
-  display: none;
   position: relative;
   margin-bottom: 50px;
 }
