@@ -5,10 +5,12 @@ block head
   script(src='/js/time-selector.js')
   script(src='/js/friend-selector.js')
   script(src='/js/user.js')
-  script(src='/js/schedule.js')
+
   script.
     var labRats = !{JSON.stringify(users)};
     var scheduler = !{JSON.stringify(scheduler)};
+
+  script(src='/js/schedule.js')
 
 
 block content

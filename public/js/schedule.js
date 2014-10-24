@@ -1,6 +1,34 @@
-var defaultTimeZone = 'America/Chicago';
-var users = [];
+window.defaultTimeZone = 'America/Chicago';
+window.users = [];
 window.calendar_languages = {};
+
+
+
+// initialize the users, fetch busy data for each
+(function(){
+  var now = new Date();
+  var later = now.getTime() + 7884000000;
+
+  var iso = {
+    now   : now.toISOString(),
+    later : new Date(later).toISOString()
+  };
+
+  labRats.forEach(function(rat){
+    var user = new User(rat);
+
+    user.fetchBusyData(iso.now, iso.later)
+      .then(function(){
+        user.markTimesAsBusy(now);
+      }).fail(function(e){
+        console.log(e);
+      });
+
+    window.users.push(user);
+  });
+})();
+
+
 
 $(function(){
 
@@ -60,31 +88,6 @@ $(function(){
     var directive = $(this).data('directive');
     calendar.navigate(directive);
   });
-
-
-  // Fetch busy data for each user
-  (function(){
-    var now = new Date();
-    var later = now.getTime() + 7884000000;
-
-    var iso = {
-      now   : now.toISOString(),
-      later : new Date(later).toISOString()
-    };
-
-    labRats.forEach(function(rat){
-      var user = new User(rat);
-
-      user.fetchBusyData(iso.now, iso.later)
-        .then(function(){
-          user.markTimesAsBusy(now);
-        }).fail(function(e){
-          console.log(e);
-        });
-
-      window.users.push(user);
-    });
-  })();
 
 
   // Check for errors, show form confirmation
