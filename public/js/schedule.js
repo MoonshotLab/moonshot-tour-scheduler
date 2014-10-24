@@ -148,9 +148,11 @@ $(function(){
     'change'          : timeSelector.update
   };
 
-  $('input[name=startTime]').timepicker(timeOptions);
-  $('input[name=endTime]').timepicker(timeOptions);
-
+  var nowTime = now.getTime();
+  $('input[name=startTime]').timepicker(timeOptions)
+    .timepicker('setTime', new Date(nowTime + 1800000));
+  $('input[name=endTime]').timepicker(timeOptions)
+    .timepicker('setTime', new Date(nowTime + 1800000*2));
 });
 
 
