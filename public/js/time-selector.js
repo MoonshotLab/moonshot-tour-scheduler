@@ -6,15 +6,21 @@
       onChange : function(){}
     }, opts);
 
-    var $el = $(this);
-    var $tr = $el.find('tr').not('.selector');
-    var $selector = $el.find('tr.selector');
+    var $table = $(this);
+    var $tr = $table.find('tr').not('.selector');
+    var $selector = $table.find('tr.selector');
     var $selectedRow;
     var meetingLength = 30;
 
 
-    this.update = function(times){
-      console.log(times);
+    this.changeTimes = function(times){
+      var $input = $(this);
+      var val = $input.val();
+
+      if($input.attr('name') == 'startTime')
+        $selectedRow = $table.find('td[data-full-time="' + val + '"]').parent();
+
+      animateSelector();
     };
 
 
@@ -26,26 +32,24 @@
       else
         $nextRow = $selectedRow.next().next();
 
-      startTime = $selectedRow.find('td')
-        .data('hour') + ':' + $selectedRow.find('td').data('minute');
-
-      endTime = $nextRow.find('td')
-        .data('hour') + ':' + $nextRow.find('td').data('minute');
-
       return {
-        start : startTime,
-        end   : endTime
+        start : $selectedRow.find('td').data('full-time'),
+        end   : $nextRow.find('td').data('full-time')
       };
     };
 
 
-    $tr.click(function(){
-      var index = $(this).index('tr');
+    var animateSelector = function(){
+      var index = $selectedRow.index('tr');
       var position = 55 + (index-2)*40;
       $selector.css('top', position);
+    };
 
+
+    $tr.click(function(){
       $selectedRow = $(this);
       settings.onChange(getTimes());
+      animateSelector();
     });
 
 

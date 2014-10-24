@@ -145,14 +145,18 @@ $(function(){
     'maxTime'         : '6:30pm',
     'forceRoundTime'  : true,
     'step'            : 15,
-    'change'          : timeSelector.update
+    'changeTime'      : timeSelector.update
   };
 
   var nowTime = now.getTime();
   $('input[name=startTime]').timepicker(timeOptions)
-    .timepicker('setTime', new Date(nowTime + 1800000));
+    .timepicker('setTime', new Date(nowTime + 1800000))
+    .on('changeTime', timeSelector.changeTimes)
+    .trigger('changeTime');
   $('input[name=endTime]').timepicker(timeOptions)
-    .timepicker('setTime', new Date(nowTime + 1800000*2));
+    .timepicker('setTime', new Date(nowTime + 1800000*2))
+    .on('changeTime', timeSelector.changeTimes)
+    .trigger('changeTime');
 });
 
 

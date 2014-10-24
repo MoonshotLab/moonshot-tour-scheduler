@@ -110,9 +110,7 @@ block content
               tr
                 - var displayHours = hours;
                 - var dataHours = hours;
-                - if(hours > 12) {
-                  - displayHours = hours - 12;
-                - }
+                - if(hours > 12) { displayHours = hours - 12; }
                 - if(hours < 10) { dataHours = '0' + dataHours; }
 
                 - var displayMinutes = minutes;
@@ -121,14 +119,15 @@ block content
                   - displayMinutes = '00';
                   - dataMinutes = '00';
                 - }
-                td(data-hour=dataHours, data-minute=dataMinutes)
-                  p(unselectable='on')
-                    span.hour= displayHours
-                    span.colon :
-                    span.minute= displayMinutes
+
+                - var suffix = 'am';
+                - if(hours >= 12) suffix = 'pm';
+                - var fullTime = displayHours + ':' + displayMinutes + suffix
+                td(data-hour=dataHours, data-minute=dataMinutes, data-full-time=fullTime)
+                  p(unselectable='on')= displayHours + ':' + displayMinutes
 
                 each user in users
-                  td(class="user-#{user._id}", data-hour=dataHours, data-minute=dataMinutes)
+                  td(class="user-#{user._id}", data-hour=dataHours, data-minute=dataMinutes, data-full-time=fullTime)
             - }
           - }
 
