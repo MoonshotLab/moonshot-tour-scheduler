@@ -20,6 +20,7 @@ html
     script(src='/js/schedule.js')
     script.
       var users = !{JSON.stringify(users)};
+      var scheduler = !{JSON.stringify(scheduler)};
 
   body
     .container
@@ -89,7 +90,7 @@ html
             .col-sm-12
               .form-group
                 label Your Email
-                input.form-control(type='text', name='schedulerEmail', value=schedulerEmail, disabled, required)
+                input.form-control(type='text', name='schedulerEmail', value=scheduler.email, disabled, required)
 
           .row
             .col-sm-12

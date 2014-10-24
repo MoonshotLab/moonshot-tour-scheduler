@@ -343,10 +343,12 @@ var showFormErrors = function(errors){
 var collectFormData = function(){
 
   var attendees = [{
-    email : $('input[name=schedulerEmail]').val()
+    email : $('input[name=schedulerEmail]').val(),
+    name  : scheduler.name
   }];
   users.forEach(function(user){
     attendees.push({
+      name  : user.displayName,
       email : user.emails[0].value
     });
   });
@@ -420,7 +422,8 @@ var populateConfirmModal = function(formData){
     if(key == 'attendees'){
       data = '';
       formData[key].forEach(function(attendee){
-        var template = '<li>' + attendee.email + '</li>';
+        var name = attendee.name || attendee.email;
+        var template = '<li>' + name + '</li>';
         data += template;
       });
     }
