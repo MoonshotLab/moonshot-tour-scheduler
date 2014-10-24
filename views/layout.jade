@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title= title
+    meta(name='viewport' content='width=device-width, user-scalable=no')
+    link(rel='stylesheet', href='/vendor/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/vendor/bootswatch-dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/vendor/bootstrap-calendar/css/calendar.css')
+    link(rel='stylesheet', href='/vendor/jt.timepicker/jquery.timepicker.css')
+    link(rel='stylesheet', href='/css/schedule.css')
+
+    script(src='/vendor/q/q.js')
+    script(src='/vendor/underscore/underscore.js')
+    script(src='/vendor/jquery/jquery.min.js')
+    script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/vendor/bootstrap-calendar/js/calendar.js')
+    script(src='/vendor/jt.timepicker/jquery.timepicker.min.js')
+
+    block head
+
+  body
+    .container
+      .row
+        .col-sm-12.page-header
+          h1 Moonshot Lab <small>Schedule a Tour</small>
+
+      block content

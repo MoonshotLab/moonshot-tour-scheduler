@@ -404,7 +404,7 @@ var submitForm = function(formData){
 
 
 var showFormConfirmation = function(formData){
-  alert('Thanks, your time has been booked');
+  window.location('/thanks');
 };
 
 

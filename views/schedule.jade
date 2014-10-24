@@ -1,188 +1,171 @@
-doctype html
-html
-  head
-    title= title
-    meta(name='viewport' content='width=device-width, user-scalable=no')
-    link(rel='stylesheet', href='/vendor/bootstrap/dist/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/vendor/bootswatch-dist/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/vendor/bootstrap-calendar/css/calendar.css')
-    link(rel='stylesheet', href='/vendor/jt.timepicker/jquery.timepicker.css')
-    link(rel='stylesheet', href='/css/schedule.css')
+extends layout
 
-    script(src='/vendor/q/q.js')
-    script(src='/vendor/underscore/underscore.js')
-    script(src='/vendor/jquery/jquery.min.js')
-    script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
-    script(src='/vendor/bootstrap-calendar/js/calendar.js')
-    script(src='/vendor/jt.timepicker/jquery.timepicker.min.js')
-    script(src='/js/time-selector.js')
-    script(src='/js/friend-selector.js')
-    script(src='/js/schedule.js')
-    script.
-      var users = !{JSON.stringify(users)};
-      var scheduler = !{JSON.stringify(scheduler)};
+block head
+  link(rel='stylesheet', href='/css/schedule.css')
+  script(src='/js/time-selector.js')
+  script(src='/js/friend-selector.js')
+  script(src='/js/schedule.js')
+  script.
+    var users = !{JSON.stringify(users)};
+    var scheduler = !{JSON.stringify(scheduler)};
 
-  body
-    .container
+
+block content
+  .row
+    .col-sm-4
       .row
-        .col-sm-12.page-header
-          h1 Moonshot Lab <small>Schedule a Tour</small>
+        .col-sm-12
+          .row.date-controller
+            .col-sm-3
+              button.btn.btn-default(data-directive='prev') &lt;&lt;
+            .col-sm-6.calendar-month-container
+              h4.text-center.calendar-month
+            .col-sm-3
+              button.btn.btn-default(data-directive='next') &gt;&gt;
+          #calendar
 
       .row
-        .col-sm-4
-          .row
-            .col-sm-12
-              .row.date-controller
-                .col-sm-3
-                  button.btn.btn-default(data-directive='prev') &lt;&lt;
-                .col-sm-6.calendar-month-container
-                  h4.text-center.calendar-month
-                .col-sm-3
-                  button.btn.btn-default(data-directive='next') &gt;&gt;
-              #calendar
+        .col-sm-6
+          .form-group
+            label Start Time
+            input.form-control(type='text', name='startTime')
+        .col-sm-6
+          .form-group
+            label End Time
+            input.form-control(type='text', name='endTime')
 
-          .row
-            .col-sm-6
-              .form-group
-                label Start Time
-                input.form-control(type='text', name='startTime')
-            .col-sm-6
-              .form-group
-                label End Time
-                input.form-control(type='text', name='endTime')
+      .row
+        .col-sm-12
+          .form-group
+            label Date
+            input.form-control(type='date', name='date')
 
-          .row
-            .col-sm-12
-              .form-group
-                label Date
-                input.form-control(type='date', name='date')
+      .row
+        .col-sm-12
+          .form-group
+            label Client/Group
+            input.form-control(type='text', placeholder='Barkley', name='client', required)
 
-          .row
-            .col-sm-12
-              .form-group
-                label Client/Group
-                input.form-control(type='text', placeholder='Barkley', name='client', required)
+      .row
+        .col-sm-12
+          .form-group
+            label Number of People Attending
+            input.form-control(type='text', placeholder='2', name='number-attending')
 
-          .row
-            .col-sm-12
-              .form-group
-                label Number of People Attending
-                input.form-control(type='text', placeholder='2', name='number-attending')
+      .row
+        .col-sm-12.friend-selector
+          .form-group.add-friends
+            label Invite Others
+            .errors.alert.alert-warning
+            .input-group
+              input.form-control(type='text', placeholder='yourfriend@email.com', name='yourFriend')
+              span.input-group-btn
+                button.btn.btn-default.btn-success(type='button') +
+          ul.list-group.friends
 
-          .row
-            .col-sm-12.friend-selector
-              .form-group.add-friends
-                label Invite Others
-                .errors.alert.alert-warning
-                .input-group
-                  input.form-control(type='text', placeholder='yourfriend@email.com', name='yourFriend')
-                  span.input-group-btn
-                    button.btn.btn-default.btn-success(type='button') +
-              ul.list-group.friends
+      .row
+        .col-sm-12
+          .form-group
+            label Note / Special Requests
+            textarea.form-control(name='description')
 
-          .row
-            .col-sm-12
-              .form-group
-                label Note / Special Requests
-                textarea.form-control(name='description')
+      .row.hidden
+        .col-sm-12
+          .form-group
+            label Your Email
+            input.form-control(type='text', name='schedulerEmail', value=scheduler.email, disabled, required)
 
-          .row.hidden
-            .col-sm-12
-              .form-group
-                label Your Email
-                input.form-control(type='text', name='schedulerEmail', value=scheduler.email, disabled, required)
+      .row
+        .col-sm-12
+          #form-errors.alert.alert-warning
 
-          .row
-            .col-sm-12
-              #form-errors.alert.alert-warning
-
-          .row
-            .col-sm-12
-              button.text-right.btn.btn-primary#validate(type='button') Review and Confirm
+      .row
+        .col-sm-12
+          button.text-right.btn.btn-primary#validate(type='button') Review and Confirm
 
 
-        .col-sm-8
-          h3.text-center.availability Moonshot Partner Availability
-          table.table.time-table
-            thead
-              tr.row
-                each user in users
-                  th.col-sm-3
-                    h5.text-center= user.displayName
-            tbody
-              tr.selector
-                td
-                  p
-                td(colspan=users.length)
-                  .time-chooser
-                    .choice(data-value='30')
-                      .time 30 min.
-                      .indicator &times;
-                    .choice(data-value='60')
-                      .time 60 min.
-                      .indicator
+    .col-sm-8
+      h3.text-center.availability Moonshot Partner Availability
+      table.table.time-table
+        thead
+          tr.row
+            each user in users
+              th.col-sm-3
+                h5.text-center= user.displayName
+        tbody
+          tr.selector
+            td
+              p
+            td(colspan=users.length)
+              .time-chooser
+                .choice(data-value='30')
+                  .time 30 min.
+                  .indicator &times;
+                .choice(data-value='60')
+                  .time 60 min.
+                  .indicator
 
-              - for(var hours=8; hours<18; hours++){
-                - for(var minutes=0; minutes< 60; minutes+=30){
-                  tr
-                    - var displayHours = hours;
-                    - var dataHours = hours;
-                    - if(hours > 12) {
-                      - displayHours = hours - 12;
-                    - }
-                    - if(hours < 10) { dataHours = '0' + dataHours; }
-
-                    - var displayMinutes = minutes;
-                    - var dataMinutes = minutes;
-                    - if(minutes == 0) {
-                      - displayMinutes = '00';
-                      - dataMinutes = '00';
-                    - }
-                    td(data-hour=dataHours, data-minute=dataMinutes)
-                      p(unselectable='on')
-                        span.hour= displayHours
-                        span.colon :
-                        span.minute= displayMinutes
-
-                    each user in users
-                      td(class="user-#{user._id}", data-hour=dataHours, data-minute=dataMinutes)
+          - for(var hours=8; hours<18; hours++){
+            - for(var minutes=0; minutes< 60; minutes+=30){
+              tr
+                - var displayHours = hours;
+                - var dataHours = hours;
+                - if(hours > 12) {
+                  - displayHours = hours - 12;
                 - }
-              - }
+                - if(hours < 10) { dataHours = '0' + dataHours; }
 
-      .modal.fade#confirm-modal
-        .modal-dialog
-          .modal-content
-            .modal-header
-              button.close(type='button', data-dismiss='modal')
-                span(aria-hidden=true) &times;
-                span.sr-only Close
-              h3 Confirm Tour
-            .modal-body
-              .alert.alert-warning.errors
-              ul
-                li.summary
-                  span.title Title
-                  span.contents
-                li.description
-                  span.title Description
-                  span.contents
-                li.date
-                  span.title Date
-                  span.contents
-                li.start
-                  span.title Start
-                  span.contents
-                li.end
-                  span.title End
-                  span.contents
-                li.attendees
-                  span.title Attendees
-                  ul.contents
+                - var displayMinutes = minutes;
+                - var dataMinutes = minutes;
+                - if(minutes == 0) {
+                  - displayMinutes = '00';
+                  - dataMinutes = '00';
+                - }
+                td(data-hour=dataHours, data-minute=dataMinutes)
+                  p(unselectable='on')
+                    span.hour= displayHours
+                    span.colon :
+                    span.minute= displayMinutes
 
-              .checkbox
-                label
-                  input(type='checkbox', name='promise')
-                  = "I promise not to be late"
-            .modal-footer
-              button.btn.btn-default(data-dismiss='modal') Cancel
-              button.btn.btn-primary#submit Book Reservation
+                each user in users
+                  td(class="user-#{user._id}", data-hour=dataHours, data-minute=dataMinutes)
+            - }
+          - }
+
+  .modal.fade#confirm-modal
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal')
+            span(aria-hidden=true) &times;
+            span.sr-only Close
+          h3 Confirm Tour
+        .modal-body
+          .alert.alert-warning.errors
+          ul
+            li.summary
+              span.title Title
+              span.contents
+            li.description
+              span.title Description
+              span.contents
+            li.date
+              span.title Date
+              span.contents
+            li.start
+              span.title Start
+              span.contents
+            li.end
+              span.title End
+              span.contents
+            li.attendees
+              span.title Attendees
+              ul.contents
+
+          .checkbox
+            label
+              input(type='checkbox', name='promise')
+              = "I promise not to be late"
+        .modal-footer
+          button.btn.btn-default(data-dismiss='modal') Cancel
+          button.btn.btn-primary#submit Book Reservation

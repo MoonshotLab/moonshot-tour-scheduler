@@ -24,13 +24,15 @@ server.listen(config.PORT, function(){
 });
 
 
-// if(config.ROOT_URL == 'http://localhost:3000')
-//   app.get('/', routes.schedule);
+if(config.ROOT_URL == 'http://localhost:3000')
+  app.get('/', routes.schedule);
 
 app.get('/schedule',
   passport.authenticate('standard', { failureRedirect: '/login-error' }),
   routes.schedule
 );
+
+app.get('/thanks', routes.thanks);
 
 app.post('/create-event',
   passport.session('session'),
