@@ -14,7 +14,7 @@
       $errs.hide();
       $errs.html('');
 
-      if(!validateEmail(email)){
+      if(!utils.validateEmail(email)){
         $errs.append('<p>not a valid email :(</p>');
         $errs.show();
       } else{
@@ -37,12 +37,6 @@
       if(e.keyCode){
         if(e.keyCode == 13) addFriend();
       } else addFriend();
-    };
-
-
-    var validateEmail = function(email){
-      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
     };
 
 
