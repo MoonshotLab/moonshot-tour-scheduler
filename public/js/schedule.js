@@ -357,8 +357,10 @@ var collectFormData = function(){
   });
 
   var dateVal = $('input[name=date]').val();
-  var startVal = $('input[name=startTime]').val();
-  var endVal = $('input[name=endTime]').val();
+  var startVal = $('input[name=startTime]').val()
+    .replace('am', '').replace('pm', '');
+  var endVal = $('input[name=endTime]').val()
+    .replace('am', '').replace('pm', '');
 
   var startTime = {
     dateTime : [dateVal, 'T', startVal, ':00'].join(''),
@@ -406,19 +408,18 @@ var showFormConfirmation = function(formData){
 
 var populateConfirmModal = function(formData){
   var $container = $('#confirm-modal');
-  for(var prop in formData){
-    var key = prop;
-    var data = formData[prop];
+  for(var key in formData){
+    var data = formData[key];
 
     if(key == 'start' || key == 'end'){
-      var humanTime = formData[prop].dateTime.replace('T' , ' ');
-      humanTime = humanTime.substring(0, 16);
+      var humanTime = formData[key].dateTime.replace('T' , ' ');
+      humanTime = humanTime.substring(11, 16);
       data = humanTime;
     }
 
     if(key == 'attendees'){
       data = '';
-      formData[prop].forEach(function(attendee){
+      formData[key].forEach(function(attendee){
         var template = '<li>' + attendee.email + '</li>';
         data += template;
       });
@@ -426,4 +427,12 @@ var populateConfirmModal = function(formData){
 
     $container.find('.' + key).find('.contents').html(data);
   }
+
+  var theDate = formData.start.dateTime.substring(0, 10);
+  var humanDate = [
+    theDate.substring(5,7),
+    theDate.substring(8,10),
+    theDate.substring(0,4)
+  ].join('/');
+  $container.find('.date').find('.contents').html(humanDate);
 };
