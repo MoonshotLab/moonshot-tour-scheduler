@@ -17,8 +17,16 @@
       var $input = $(this);
       var val = $input.val();
 
-      if($input.attr('name') == 'startTime')
+      if($input.attr('name') == 'startTime'){
         $selectedRow = $table.find('td[data-full-time="' + val + '"]').parent();
+
+        // Assume a 15 minute increment, replace
+        // todo: make this better
+        if(!$selectedRow.length){
+          val = val.replace('15', '00').replace('45', '00');
+          $selectedRow = $table.find('td[data-full-time="' + val + '"]').parent();
+        }
+      }
 
       animateSelector();
     };
