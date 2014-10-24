@@ -13,6 +13,11 @@
     var meetingLength = 30;
 
 
+    this.update = function(times){
+      console.log(times);
+    };
+
+
     var getTimes = function(){
       var startTime, endTime, $nextRow;
 
@@ -60,6 +65,8 @@
         $self.find('.indicator').html('&times;');
       }, 300);
     });
+
+    return this;
   };
 
 }(jQuery));

@@ -127,12 +127,29 @@ $(function(){
 
   // Add and remove friends
   $('.friend-selector').friendSelector();
-  $('table').timeSelector({
+
+
+  // init the time selector
+  var timeSelector = $('table').timeSelector({
     onChange : function(time){
       $('input[name=startTime]').val(time.start);
       $('input[name=endTime]').val(time.end);
     }
   });
+
+
+  // add tiempickers
+  var timeOptions = {
+    'scrollDefault'   : 'now',
+    'minTime'         : '8:00am',
+    'maxTime'         : '6:30pm',
+    'forceRoundTime'  : true,
+    'step'            : 15,
+    'change'          : timeSelector.update
+  };
+
+  $('input[name=startTime]').timepicker(timeOptions);
+  $('input[name=endTime]').timepicker(timeOptions);
 
 });
 

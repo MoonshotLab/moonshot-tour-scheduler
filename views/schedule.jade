@@ -6,13 +6,15 @@ html
     link(rel='stylesheet', href='/vendor/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/bootswatch-dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/bootstrap-calendar/css/calendar.css')
+    link(rel='stylesheet', href='/vendor/jt.timepicker/jquery.timepicker.css')
     link(rel='stylesheet', href='/css/schedule.css')
 
     script(src='/vendor/q/q.js')
     script(src='/vendor/underscore/underscore.js')
     script(src='/vendor/jquery/jquery.min.js')
     script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
-    script(src='vendor/bootstrap-calendar/js/calendar.js')
+    script(src='/vendor/bootstrap-calendar/js/calendar.js')
+    script(src='/vendor/jt.timepicker/jquery.timepicker.min.js')
     script(src='/js/time-selector.js')
     script(src='/js/friend-selector.js')
     script(src='/js/schedule.js')
@@ -42,11 +44,11 @@ html
             .col-sm-6
               .form-group
                 label Start Time
-                input.form-control(type='time', name='startTime', value='08:00')
+                input.form-control(type='text', name='startTime')
             .col-sm-6
               .form-group
                 label End Time
-                input.form-control(type='time', name='endTime', value='08:30')
+                input.form-control(type='text', name='endTime')
 
           .row
             .col-sm-12
@@ -64,7 +66,7 @@ html
             .col-sm-12
               .form-group
                 label Number of People Attending
-                input.form-control(type='number', placeholder='2', name='number-attending')
+                input.form-control(type='text', placeholder='2', name='number-attending')
 
           .row
             .col-sm-12.friend-selector
