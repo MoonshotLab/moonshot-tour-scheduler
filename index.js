@@ -11,7 +11,12 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(session({ secret : config.SESSION_SECRET }));
+app.use(session({
+  secret : config.SESSION_SECRET,
+  saveUninitialized : true,
+  resave : true
+}));
+
 app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
@@ -24,8 +29,8 @@ server.listen(config.PORT, function(){
 });
 
 
-// if(config.ROOT_URL == 'http://localhost:3000')
-//   app.get('/', routes.schedule);
+if(config.ROOT_URL == 'http://localhost:3000')
+  app.get('/', routes.schedule);
 
 app.get('/schedule',
   passport.authenticate('standard', { failureRedirect: '/login-error' }),

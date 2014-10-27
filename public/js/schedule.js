@@ -44,10 +44,12 @@ window.calendar_languages = {
     if(e.target.type == 'checkbox'){
       var email = e.target.value;
       var user = _.findWhere(moonshot.labRats, { email : email });
-      if(e.target.checked)
-        user.shouldBook = true;
-      else
-        user.shouldBook = false;
+      if(user){
+        if(e.target.checked)
+          user.shouldBook = true;
+        else
+          user.shouldBook = false;
+      }
     }
   });
 
@@ -63,7 +65,7 @@ window.calendar_languages = {
 
   $('#submit').click(function(){
     if(form.checkPromise()){
-      submitForm(form.collectData())
+      form.submit(form.collectData())
         .then(form.showSuccess)
         .fail(function(err){
           alert(err.statusText);

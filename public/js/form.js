@@ -77,12 +77,12 @@ var form = {
     );
 
     var startTime = {
-      dateTime : [dateVal, 'T', start24h, ':00'].join(''),
+      dateTime : [dateVal, 'T', start24h].join(''),
       human    : $('input[name=startTime]').val(),
       timeZone : moonshot.defaultTimeZone
     };
     var endTime = {
-      dateTime : [dateVal, 'T', end24h, ':00'].join(''),
+      dateTime : [dateVal, 'T', end24h].join(''),
       human    : $('input[name=endTime]').val(),
       timeZone : moonshot.defaultTimeZone
     };
@@ -157,6 +157,6 @@ var form = {
 
 
   showSuccess : function(){
-    window.location('/thanks');
+    window.location = '/thanks';
   }
 };
