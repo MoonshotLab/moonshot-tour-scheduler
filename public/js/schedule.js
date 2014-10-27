@@ -1,5 +1,9 @@
-window.defaultTimeZone = 'America/Chicago';
-window.users = [];
+window.moonshot = {
+  defaultTimeZone : 'America/Chicago',
+  labRats : [],
+  scheduler : new User(prepopulatedData.scheduler)
+};
+
 window.calendar_languages = {
   'en-US' : {
     d0: 'Su', d1: 'Mo', d2: 'Tu', d3: 'We', d4: 'Th', d5: 'Fr', d6: 'Sa'
@@ -18,7 +22,7 @@ window.calendar_languages = {
     later : new Date(later).toISOString()
   };
 
-  labRats.forEach(function(rat){
+  prepopulatedData.labRats.forEach(function(rat){
     var user = new User(rat);
 
     user.fetchBusyData(iso.now, iso.later)
@@ -28,7 +32,7 @@ window.calendar_languages = {
         console.log(e);
       });
 
-    window.users.push(user);
+    moonshot.labRats.push(user);
   });
 })();
 
@@ -100,7 +104,7 @@ window.calendar_languages = {
       var selectedDateTime = new Date(Date.parse(calendarDate) + 86400000);
 
       // check users
-      window.users.forEach(function(user){
+      moonshot.labRats.forEach(function(user){
         user.markTimesAsBusy(selectedDateTime);
       });
     }

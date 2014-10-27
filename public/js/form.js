@@ -56,19 +56,16 @@ var form = {
 
 
   collectData : function(){
-    var attendees = [window.scheduler];
+    var attendees = [moonshot.scheduler];
 
-    window.users.forEach(function(user){
-      attendees.push({
-        name  : user.displayName,
-        email : user.emails[0].value
-      });
+    moonshot.labRats.forEach(function(user){
+      attendees.push(user);
     });
 
     $('ul.friends li').each(function(i, el){
-      attendees.push({
-        email : $(el).find('.email').text()
-      });
+      attendees.push(new User({
+        emails : [{ value : $(el).find('.email').text() }]
+      }));
     });
 
     var dateVal = $('input[name=date]').val();
@@ -82,12 +79,12 @@ var form = {
     var startTime = {
       dateTime : [dateVal, 'T', start24h, ':00'].join(''),
       human    : $('input[name=startTime]').val(),
-      timeZone : defaultTimeZone
+      timeZone : moonshot.defaultTimeZone
     };
     var endTime = {
       dateTime : [dateVal, 'T', end24h, ':00'].join(''),
       human    : $('input[name=endTime]').val(),
-      timeZone : defaultTimeZone
+      timeZone : moonshot.defaultTimeZone
     };
 
     var note = '';
@@ -115,12 +112,14 @@ var form = {
       if(key == 'attendees'){
         data = '';
         formData[key].forEach(function(attendee){
-          var name = attendee.name || attendee.email;
+          var checked = 'checked';
+          if(!attendee.shouldBook) checked = '';
+
           var template = [
             '<li class="checkbox">',
               '<label>',
-                '<input type="checkbox" checked value="' + attendee.email + '" />',
-                name,
+                '<input type="checkbox" ' + checked + ' value="' + attendee.emails[0].value + '" />',
+                attendee.displayName,
               '</label>',
             '</li>'
           ].join('');

@@ -1,11 +1,17 @@
 // allow population of user data
-var User = function(prepopObj){
-  this.calendars  = [];
+var User = function(prepop){
+  if(!prepop) prepop = { emails : [] };
+
+  this.calendars  = {};
+  this.shouldBook = true;
 
   var instance = this;
-  for(var key in prepopObj){
-    instance[key] = prepopObj[key];
+  for(var key in prepop){
+    instance[key] = prepop[key];
   }
+
+  if(!prepop.displayName)
+    this.displayName = prepop.emails[0].value;
 };
 
 
@@ -141,7 +147,7 @@ User.prototype.fetchBusyData = function(timeMin, timeMax){
     '&timeMax=',
     timeMax,
     '&timeZone=',
-    defaultTimeZone
+    moonshot.defaultTimeZone
   ].join('');
 
   $.ajax({

@@ -9,8 +9,10 @@ block head
   script(src='/js/form.js')
 
   script.
-    var labRats = !{JSON.stringify(users)};
-    var scheduler = !{JSON.stringify(scheduler)};
+    var prepopulatedData = {
+      labRats   : !{JSON.stringify(users)},
+      scheduler : !{JSON.stringify(scheduler)}
+    }
 
 block foot
   script(src='/js/schedule.js')
@@ -79,7 +81,7 @@ block content
         .col-sm-12
           .form-group
             label Your Email
-            input.form-control(type='text', name='schedulerEmail', value=scheduler.email, disabled, required)
+            input.form-control(type='text', name='schedulerEmail', value=scheduler.emails[0].value, disabled, required)
 
       .row
         .col-sm-12
