@@ -69,6 +69,7 @@ table.time-table thead {
 table.time-table thead th {
   border-bottom: none;
   height: 55px;
+  white-space: nowrap;
 }
 table.time-table thead h4 {
   text-align: center;
