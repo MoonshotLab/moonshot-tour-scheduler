@@ -216,6 +216,10 @@ table.time-table tbody td p span.minute {
 #confirm-modal ul.contents li {
   margin-bottom: 10px;
 }
+#confirm-modal .subtitle {
+  margin: -20px 0 10px 150px;
+  float: left;
+}
 #confirm-modal .title {
   font-weight: bold;
   display: inline-block;
