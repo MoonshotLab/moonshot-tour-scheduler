@@ -23,8 +23,25 @@
         // Assume a 15 minute increment, replace
         // todo: make this better
         if(!$selectedRow.length){
-          val = val.replace('15', '00').replace('45', '00');
-          $selectedRow = $table.find('td[data-full-time="' + val + '"]').parent();
+          var splits = val.split(':');
+          var hours = Number(splits[0]);
+          var meridian = splits[1].substring(2,4);
+          var minutes = splits[1].substring(0,2);
+
+          if(minutes == '45')
+            hours += 1;
+          if(hours == 13) {
+            hours = '1';
+            meridian = 'pm';
+          }
+
+          val = hours + ':' + minutes + meridian;
+
+          $selectedRow = $table.find([
+            'td[data-full-time="',
+            val.replace('15', '00').replace('45', '00'),
+            '"]'
+          ].join('')).parent();
         }
       }
 
