@@ -68,7 +68,7 @@ window.calendar_languages = {
       form.submit(form.collectData())
         .then(form.showSuccess)
         .fail(function(err){
-          alert(err.statusText);
+          alert(err.responseText);
         });
     }
   });
