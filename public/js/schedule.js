@@ -40,6 +40,17 @@ window.calendar_languages = {
 
 // validate and submit form
 (function(){
+  $('#confirm-modal').click(function(e){
+    if(e.target.type == 'checkbox'){
+      var email = e.target.value;
+      var user = _.findWhere(moonshot.labRats, { email : email });
+      if(e.target.checked)
+        user.shouldBook = true;
+      else
+        user.shouldBook = false;
+    }
+  });
+
   $('#validate').click(function(){
     form.clearErrors();
     var errors = form.validate();

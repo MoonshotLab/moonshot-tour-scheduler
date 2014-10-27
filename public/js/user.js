@@ -12,6 +12,8 @@ var User = function(prepop){
 
   if(!prepop.displayName)
     this.displayName = prepop.emails[0].value;
+
+  this.email = prepop.emails[0].value;
 };
 
 
