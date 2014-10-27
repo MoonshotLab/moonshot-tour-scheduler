@@ -72,17 +72,21 @@ var form = {
     });
 
     var dateVal = $('input[name=date]').val();
-    var startVal = $('input[name=startTime]').val()
-      .replace('am', '').replace('pm', '');
-    var endVal = $('input[name=endTime]').val()
-      .replace('am', '').replace('pm', '');
+    var start24h = utils.convert12hTo24hTime(
+      $('input[name=startTime]').val()
+    );
+    var end24h = utils.convert12hTo24hTime(
+      $('input[name=endTime]').val()
+    );
 
     var startTime = {
-      dateTime : [dateVal, 'T', startVal, ':00'].join(''),
+      dateTime : [dateVal, 'T', start24h, ':00'].join(''),
+      human    : $('input[name=startTime]').val(),
       timeZone : defaultTimeZone
     };
     var endTime = {
-      dateTime : [dateVal, 'T', endVal, ':00'].join(''),
+      dateTime : [dateVal, 'T', end24h, ':00'].join(''),
+      human    : $('input[name=endTime]').val(),
       timeZone : defaultTimeZone
     };
 
@@ -99,16 +103,14 @@ var form = {
     };
   },
 
+
   populateConfirm : function(formData){
     var $container = $('#confirm-modal');
     for(var key in formData){
       var data = formData[key];
 
-      if(key == 'start' || key == 'end'){
-        var humanTime = formData[key].dateTime.replace('T' , ' ');
-        humanTime = humanTime.substring(11, 16);
-        data = humanTime;
-      }
+      if(key == 'start' || key == 'end')
+        data = formData[key].human;
 
       if(key == 'attendees'){
         data = '';
