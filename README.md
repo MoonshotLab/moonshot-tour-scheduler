@@ -2,7 +2,8 @@
 A simple scheduling system which helps Barkley partners book tours for the lab.
 
 ## Authenticating
-To use the scheduler, you'll need an e-mail address which matches one of the following domains: [http://barkleyus.com](barkleyus.com), [http://crossroads.us/](crossroads.us), [http://www.blacktopcreative.com/](blacktopcreative.com)
+To use the scheduler, you'll need an e-mail address which matches one of the following domains: [http://barkleyus.com](barkleyus.com), [http://crossroads.us/](crossroads.us), [http://www.blacktopcreative.com/](blacktopcreative.com),
+[http://thefuturecast.com/](thefuturecast.com)
 
 To be tracked by the scheduler, you need to first hit the authentication route at `/auth`. This will build a user record with an oAuth2 access and refresh token which will automatically update any time data is requested.
 
